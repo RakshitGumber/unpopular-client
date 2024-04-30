@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./FeedCard.css";
 import { ShowImage } from "../../../util";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import { UserContext } from "../../../App.js";
 
 function FeedCard({ data }) {
   const [overflowActive, setOverflowActive] = useState(false);
@@ -11,7 +10,7 @@ function FeedCard({ data }) {
   const [showFullImage, setShowFullImage] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const user = JSON.parse(localStorage.getItem("user"))?.user;
 
   const overflowingText = useRef(null);
 

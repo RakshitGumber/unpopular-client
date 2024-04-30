@@ -20,7 +20,7 @@ export const UserContext = createContext(null);
 
 const App = () => {
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")).user
+    JSON.parse(localStorage.getItem("user"))?.user
   );
 
   return (

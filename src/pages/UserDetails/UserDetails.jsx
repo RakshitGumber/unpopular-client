@@ -40,6 +40,9 @@ const UserDetails = () => {
   const [editing, setEditing] = useState(false);
   const [editable, setEditable] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+
   const location = useLocation();
 
   // Use effect
@@ -54,6 +57,21 @@ const UserDetails = () => {
         ) {
           setEditable(true);
         }
+        if (
+          JSON.parse(localStorage.getItem("user")).user.followings.includes(
+            data.user._id
+          )
+        ) {
+          setIsFollowing(true);
+        }
+
+        if (
+          JSON.parse(localStorage.getItem("user")).user.followRequests.includes(
+            data.user._id
+          )
+        ) {
+          setIsPending(true);
+        }
       })
       .catch((error) => {
         console.error("Error fetching user details:", error);
@@ -66,6 +84,8 @@ const UserDetails = () => {
     localStorage.removeItem("user");
     navigate("../");
   };
+
+  const sendFollowRequest = () => {};
 
   // Function for handling for submit
   const handleSubmit = async (e) => {
@@ -130,7 +150,7 @@ const UserDetails = () => {
                     </p>
                     <p className="weak">@{user.username}</p>
                   </div>
-                  {editable && (
+                  {editable ? (
                     <button
                       onClick={() => {
                         setEditing(true);
@@ -138,6 +158,10 @@ const UserDetails = () => {
                     >
                       <FaPencil size={24} />
                     </button>
+                  ) : (
+                    isFollowing || (
+                      <button onClick={sendFollowRequest}>Follow</button>
+                    )
                   )}
                 </div>
               </div>

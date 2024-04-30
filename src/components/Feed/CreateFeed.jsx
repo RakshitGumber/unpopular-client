@@ -7,7 +7,7 @@ const initialState = {
   title: "",
   message: "",
   images: [],
-  creator: JSON.parse(localStorage.getItem("user")).user._id,
+  creator: JSON.parse(localStorage.getItem("user"))?.user?._id,
 };
 
 const CreateFeed = ({ setShowCreate }) => {
