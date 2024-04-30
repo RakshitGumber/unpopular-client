@@ -47,3 +47,7 @@ export const removeFollowing = (id, userId) =>
   API.post(`/user/${id}/followings/remove`, { userId });
 
 export const getPosts = () => API.get("/posts");
+
+export const createPost = (data) => API.post("/posts", data);
+
+export const updatePost = (id, data) => API.post(`/posts/${id}`, data);

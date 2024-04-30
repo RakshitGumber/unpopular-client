@@ -7,6 +7,7 @@ import {
   IoChatboxOutline,
   IoCompassOutline,
   IoAddSharp,
+  IoSettingsSharp,
 } from "react-icons/io5";
 import CreateFeed from "../Feed/CreateFeed";
 import { useOutsideClick, ShowImage } from "../../util";
@@ -123,9 +124,18 @@ function Sidebar() {
           >
             Log Out
           </button>
+          <button
+            className="action"
+            onClick={() => {
+              navigate(`../user/${user._id}/settings`);
+            }}
+          >
+            <IoSettingsSharp />
+            Settings
+          </button>
         </div>
       )}
-      {showCreate && <CreateFeed />}
+      {showCreate && <CreateFeed setShowCreate={setShowCreate} />}
     </div>
   );
 }

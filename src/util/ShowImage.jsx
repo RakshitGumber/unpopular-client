@@ -17,8 +17,7 @@ function ShowImage(props) {
         <img
           src={props.image}
           alt="ProfilePic"
-          onError={setProfilePicError(true)}
-          onInvalid={setProfilePicError(true)}
+          onInvalid={() => setProfilePicError(true)}
           {...props}
         />
       )}

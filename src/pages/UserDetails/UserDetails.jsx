@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, updateUser } from "../../store/actions/user";
 import {
@@ -18,6 +18,7 @@ import {
   FaBriefcase,
 } from "react-icons/fa6";
 import moment from "moment";
+import { UserContext } from "../../App";
 
 const initialState = {
   firstName: "",
@@ -81,24 +82,25 @@ const UserDetails = () => {
   let aboutData = [];
   if (userData) {
     user = userData.user;
-
-    aboutData = [
-      {
+    if (user.location)
+      aboutData.push({
         id: 0,
         icon: <FaLocationDot />,
-        text: user.location ?? "New Delhi, India",
-      },
-      {
+        text: user.location,
+      });
+    if (user.dateOfBirth)
+      aboutData.push({
         id: 1,
         icon: <FaRegCalendar />,
-        text: moment(user.dateOfBirth).format("Do MMM y") ?? "1st April ∞∞",
-      },
-      {
+        text: moment(user.dateOfBirth).format("Do MMM y"),
+      });
+
+    if (user.desc)
+      aboutData.push({
         id: 2,
         icon: <FaBriefcase />,
-        text: user.desc ?? "Nothing",
-      },
-    ];
+        text: user.desc,
+      });
   }
 
   return (
@@ -166,12 +168,11 @@ const UserDetails = () => {
             <div className="content">
               <div className="prof-about">
                 <h3>About me</h3>
-                <p className="weak">
-                  "
-                  {user.bio ??
-                    "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero?"}
-                  "
-                </p>
+                {user.bio && (
+                  <>
+                    <p className="weak">"{user.bio}"</p>
+                  </>
+                )}
                 {aboutData.map((item) => (
                   <span key={item.id}>
                     {item.icon}&emsp;{item.text}

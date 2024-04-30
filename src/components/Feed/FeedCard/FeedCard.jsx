@@ -1,13 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import "./FeedCard.css";
 import { ShowImage } from "../../../util";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import { UserContext } from "../../../App.js";
 
 function FeedCard({ data }) {
   const [overflowActive, setOverflowActive] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [showFullImage, setShowFullImage] = useState(false);
+  const [showMoreOptions, setShowMoreOptions] = useState(false);
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const overflowingText = useRef(null);
 
@@ -57,8 +61,10 @@ function FeedCard({ data }) {
               : creator.firstName}
           </p>
           <p className="weak">@{creator.username}</p>
+          <span>{moment(data.createdAt).fromNow()}</span>
         </div>
       </div>
+
       <h1
         className={`post-content not-selectable ${!showMore && "fade"}`}
         ref={overflowingText}
@@ -91,6 +97,22 @@ function FeedCard({ data }) {
           ))}
         </div>
       )}
+      <div>
+        <button>Like</button>
+        <button>Dislike</button>
+        <button>Comment</button>
+        {creator._id === user._id && (
+          <button onClick={() => setShowMoreOptions(!showMoreOptions)}>
+            More
+          </button>
+        )}
+        {showMoreOptions && (
+          <>
+            <button>edit</button>
+            <button>delete</button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

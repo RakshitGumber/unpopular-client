@@ -9,3 +9,17 @@ export const getPost = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const createPost = (post) => async (dispatch) => {
+  try {
+    const response = await api.createPost(post);
+
+    if (response && response.data) {
+      dispatch({ type: "CREATE", payload: response.data });
+    } else {
+      console.log("Response data is missing or undefined:", response);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
