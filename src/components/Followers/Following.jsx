@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import FollowerCard from "./FollowerCard";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getFollowingList } from "../../store/actions/followers";
+import {
+  getFollowingList,
+  removeFollowing,
+} from "../../store/actions/followers";
+import Loader from "../Loader/Loader";
 
 const Following = () => {
   const dispatch = useDispatch();
@@ -17,7 +21,9 @@ const Following = () => {
     },
     {
       name: "remove",
-      do: () => {},
+      do: (userId) => {
+        dispatch(removeFollowing(id, userId));
+      },
     },
     {
       name: "call",
@@ -41,7 +47,7 @@ const Following = () => {
   }, [dispatch, id]);
 
   if (loading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
 
   if (!following.data) {

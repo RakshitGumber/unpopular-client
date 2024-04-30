@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("./stylesheets/form.css");
 
-* {
+*,
+::before,
+::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -45,6 +47,12 @@ p {
   line-height: 1.4rem;
   letter-spacing: 0.05rem;
   font-weight: 400;
+  color: var(--text);
+}
+
+p.weak {
+  color: var(--secondary-text);
+  font-size: 1rem;
 }
 
 a {
@@ -65,4 +73,19 @@ ul {
 
 li {
   list-style: none;
+}
+
+/* Scroll Bar design */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--primary);
 }

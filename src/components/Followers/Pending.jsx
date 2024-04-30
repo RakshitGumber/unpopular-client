@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import FollowerCard from "./FollowerCard";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getPendingRequest } from "../../store/actions/followers";
+import {
+  getPendingRequest,
+  rejectRequest,
+  acceptRequest,
+} from "../../store/actions/followers";
+import Loader from "../Loader/Loader";
 
 const Pending = () => {
   const dispatch = useDispatch();
@@ -13,11 +18,15 @@ const Pending = () => {
   let pendingActions = [
     {
       name: "accept",
-      do: () => {},
+      do: (requestorId) => {
+        dispatch(acceptRequest(id, requestorId));
+      },
     },
     {
       name: "reject",
-      do: () => {},
+      do: (requestorId) => {
+        dispatch(rejectRequest(id, requestorId));
+      },
     },
   ];
 
@@ -35,9 +44,8 @@ const Pending = () => {
 
     fetchPending();
   }, [dispatch, id]);
-
   if (loading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
 
   if (!requests.data) {

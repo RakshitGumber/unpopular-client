@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../../store/actions/user";
+import { signup } from "../store/actions/user";
 import { useDispatch } from "react-redux";
 import FileBase from "react-file-base64";
 

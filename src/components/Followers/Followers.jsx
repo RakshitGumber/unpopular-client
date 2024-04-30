@@ -2,28 +2,31 @@ import React, { useEffect, useState } from "react";
 import FollowerCard from "./FollowerCard";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getFriendList } from "../../store/actions/followers";
-
-let followersActions = [
-  {
-    name: "Chat",
-    do: () => {},
-  },
-  {
-    name: "remove",
-    do: () => {},
-  },
-  {
-    name: "call",
-    do: () => {},
-  },
-];
+import { getFriendList, removeFollower } from "../../store/actions/followers";
+import Loader from "../Loader/Loader";
 
 const Followers = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  let followersActions = [
+    {
+      name: "Chat",
+      do: () => {},
+    },
+    {
+      name: "remove",
+      do: (userId) => {
+        dispatch(removeFollower(id, userId));
+      },
+    },
+    {
+      name: "call",
+      do: () => {},
+    },
+  ];
 
   useEffect(() => {
     const fetchFollowers = async () => {
@@ -41,7 +44,7 @@ const Followers = () => {
   }, [dispatch, id]);
 
   if (loading) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
 
   if (!followers.data) {

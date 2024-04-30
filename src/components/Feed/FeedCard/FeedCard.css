@@ -1,0 +1,97 @@
+.feed-card-container {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--secondary-background);
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.feed-card-container > .user-tag {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.feed-card-container > .user-tag > img {
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+}
+
+.feed-card-container .userinfo {
+  display: flex;
+  flex-flow: column;
+}
+
+.userinfo > p.strong {
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.userinfo > p.weak {
+  font-size: 0.8rem;
+  color: var(--secondary-text);
+}
+.feed-card-container .post-content {
+  font-size: 1rem;
+  padding: 0.5rem;
+  line-height: 1.6rem;
+}
+
+.feed-card-container .fade {
+  mask-image: none;
+  max-height: 100px;
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
+
+.feed-card-container .more {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 0.8rem;
+  margin: 0.5rem;
+  align-self: flex-end;
+}
+
+.feed-card-container .more:hover {
+  cursor: pointer;
+  color: var(--secondary-text);
+}
+
+.feed-card-container .more:active {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.feed-card-container .post-images {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.feed-card-container .post-images > img {
+  border-radius: 0.5rem;
+  background-color: var(--background);
+}
+
+.feed-card-container .post-images > img.grid-image-view {
+  object-fit: cover;
+  flex-basis: calc(50% - 1rem);
+  flex-grow: 1;
+  height: 200px;
+}
+
+.feed-card-container .post-images > img.cover-image {
+  object-fit: cover;
+  flex-basis: calc(50% - 1rem);
+  flex-grow: 1;
+  height: 400px;
+}
+
+.feed-card-container .post-images > img.fit-contain {
+  object-fit: contain;
+}

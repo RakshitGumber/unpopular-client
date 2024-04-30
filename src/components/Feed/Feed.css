@@ -1,0 +1,26 @@
+.feed-wrapper {
+  padding: 1rem;
+  flex-grow: 1;
+  overflow: auto;
+  max-width: 730px;
+}
+
+.feed-wrapper > h2 {
+  margin-bottom: 1rem;
+}
+
+.feed-wrapper > .feeds {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+.feed-wrapper footer {
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+  padding: 2rem;
+  margin: 1rem;
+  border-top: 3px solid var(--secondary-background);
+  border-bottom: 3px solid var(--secondary-background);
+}

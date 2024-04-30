@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../store/actions/user";
+import { login } from "../store/actions/user";
 import { useDispatch } from "react-redux";
 
 const initialState = {

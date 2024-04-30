@@ -1,35 +1,113 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import LoginPage from "./components/pages/LoginPage.jsx";
-import Navbar from "./components/Navbar/index.jsx";
-import SignupPage from "./components/pages/SignupPage.jsx";
-import Landing from "./components/pages/Landing.jsx";
-import Home from "./components/pages/Home.jsx";
-import UserDetails from "./components/pages/UserDetails.jsx";
-import People from "./components/pages/People.jsx";
-import Followers from "./components/Followers/Followers.jsx";
-import Following from "./components/Followers/Following.jsx";
-import Pending from "./components/Followers/Pending.jsx";
+import React, { createContext, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Followers, Following, Pending } from "./components";
+import {
+  Landing,
+  LoginPage,
+  SignupPage,
+  Home,
+  UserDetails,
+  People,
+} from "./pages";
+import NotFound from "./pages/NotFound";
+
+export const UserContext = createContext(null);
 
 const App = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")).user
+  );
 
   return (
-    <Router>
-      <Navbar user={user} />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="user/login" element={<LoginPage setUser={setUser} />} />
-        <Route path="user/signup" element={<SignupPage />} />
-        <Route path="home" element={<Home />} />
-        <Route path="user/:id" element={<UserDetails />} />
-        <Route path="user" element={<People />}>
-          <Route path=":id/followers" element={<Followers />} />
-          <Route path=":id/following" element={<Following />} />
-          <Route path=":id/pending" element={<Pending />} />
-        </Route>
-      </Routes>
-    </Router>
+    <UserContext.Provider value={{ user, setUser }}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="user/login" element={<LoginPage setUser={setUser} />} />
+          <Route path="user/signup" element={<SignupPage />} />
+          {user && (
+            <>
+              <Route
+                path="home"
+                element={
+                  user.length !== 0 ? <Home /> : <Navigate to="../user/login" />
+                }
+              />
+              <Route path="user/:id/" element={<UserDetails />}>
+                <Route
+                  path="followers"
+                  element={
+                    user.length !== 0 ? (
+                      <Followers />
+                    ) : (
+                      <Navigate to="../user/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="following"
+                  element={
+                    user.length !== 0 ? (
+                      <Following />
+                    ) : (
+                      <Navigate to="../user/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="posts"
+                  element={
+                    user.length !== 0 ? (
+                      <Pending />
+                    ) : (
+                      <Navigate to="../user/login" />
+                    )
+                  }
+                />
+              </Route>
+              <Route path="people/*" element={<People />}>
+                <Route
+                  path=":id/followers"
+                  element={
+                    user.length !== 0 ? (
+                      <Followers />
+                    ) : (
+                      <Navigate to="../user/login" />
+                    )
+                  }
+                />
+                <Route
+                  path=":id/following"
+                  element={
+                    user.length !== 0 ? (
+                      <Following />
+                    ) : (
+                      <Navigate to="../user/login" />
+                    )
+                  }
+                />
+                <Route
+                  path=":id/pending"
+                  element={
+                    user.length !== 0 ? (
+                      <Pending />
+                    ) : (
+                      <Navigate to="../user/login" />
+                    )
+                  }
+                />
+              </Route>
+            </>
+          )}
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </UserContext.Provider>
   );
 };
 

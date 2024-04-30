@@ -30,3 +30,20 @@ export const getPendingRequest = (id) =>
 
 export const searchUser = (id, query) =>
   API.get(`/user/${id}/followers/search?search=${query}`);
+
+export const sendRequest = (id, userId) =>
+  API.post(`/user/${id}/followers/requests`, { userId });
+
+export const rejectRequest = (id, requestorId) =>
+  API.post(`/user/${id}/followers/requests/reject`, { requestorId });
+
+export const acceptRequest = (id, requestorId) =>
+  API.post(`/user/${id}/followers/requests/accept`, { requestorId });
+
+export const removeFollower = (id, userId) =>
+  API.post(`/user/${id}/followers/remove`, { userId });
+
+export const removeFollowing = (id, userId) =>
+  API.post(`/user/${id}/followings/remove`, { userId });
+
+export const getPosts = () => API.get("/posts");

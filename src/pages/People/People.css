@@ -1,0 +1,10 @@
+.friends-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.friends-main {
+  flex-grow: 1;
+  padding: 1rem;
+  max-width: 730px;
+}

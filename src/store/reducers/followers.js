@@ -11,6 +11,14 @@ const friendsReducer = (
       return { ...state, friendsData: action?.data };
     case "FIND_USER":
       return { ...state, searchResults: action?.data };
+    case "SEND_REQ":
+      return { ...state, friendsData: action?.data };
+    case "REJECT_REQ":
+    case "ACCEPT_REQ":
+      return { ...state, friendsData: action?.data };
+    case "REMOVE_FOLLOWER":
+    case "REMOVE_FOLLOWING":
+      return { ...state, friendsData: action?.data };
     default:
       return state;
   }

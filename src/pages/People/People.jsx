@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { Outlet, Link, useParams } from "react-router-dom";
 import { searchUser } from "../../store/actions/followers";
 import { debounce } from "lodash";
-import SearchUserResult from "../Search/SearchUserResult";
+import SearchUserResult from "../../components/Search/SearchUserResult";
+import { Sidebar, RightPanel } from "../../components";
+import "./People.css";
 
 const People = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -30,28 +32,32 @@ const People = () => {
   };
 
   return (
-    <>
-      <h1>People</h1>
-      <input
-        type="text"
-        name="searchUser"
-        value={value}
-        onChange={handleChange}
-      />
-      {loading ? (
-        <p>Loading...</p>
-      ) : searchResults && searchResults.length > 0 ? (
-        searchResults.map((data) => (
-          <SearchUserResult key={data._id} data={data} />
-        ))
-      ) : (
-        <p>No Result Found</p>
-      )}
-      <Link to={`${user.user._id}/followers`}>Followers</Link>
-      <Link to={`${user.user._id}/following`}>Following</Link>
-      <Link to={`${user.user._id}/pending`}>Pending</Link>
-      <Outlet />
-    </>
+    <div className="friends-wrapper">
+      <Sidebar />
+      <div className="friends-main">
+        <h1>People</h1>
+        <input
+          type="text"
+          name="searchUser"
+          value={value}
+          onChange={handleChange}
+        />
+        {loading ? (
+          <p>Loading...</p>
+        ) : searchResults && searchResults.length > 0 ? (
+          searchResults.map((data) => (
+            <SearchUserResult key={data._id} data={data} />
+          ))
+        ) : (
+          <p>No Result Found</p>
+        )}
+        <Link to={`${user.user._id}/followers`}>Followers</Link>
+        <Link to={`${user.user._id}/following`}>Following</Link>
+        <Link to={`${user.user._id}/pending`}>Pending</Link>
+        <Outlet />
+      </div>
+      <RightPanel />
+    </div>
   );
 };
 

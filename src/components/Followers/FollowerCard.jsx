@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const FollowerCard = ({ details, actions }) => {
   return (
@@ -11,12 +11,9 @@ const FollowerCard = ({ details, actions }) => {
         }
         alt="missing"
       />
-      {actions.map((action) => {
+      {actions.map((action, index) => {
         return (
-          <button
-            key={Math.floor(Math.random() * action.name.length)}
-            onClick={action.do}
-          >
+          <button key={index} onClick={(id) => action.do(details._id)}>
             {action.name}
           </button>
         );
