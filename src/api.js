@@ -50,4 +50,11 @@ export const getPosts = () => API.get("/posts");
 
 export const createPost = (data) => API.post("/posts", data);
 
-export const updatePost = (id, data) => API.post(`/posts/${id}`, data);
+export const updatePost = (id, data) => API.patch(`/posts/${id}`, data);
+
+export const likePost = (id, userId) =>
+  API.patch(`/posts/${id}/like`, { userId });
+
+export const dislikePost = (id, userId) => {
+  API.patch(`/posts/${id}/dislike`, { userId });
+};

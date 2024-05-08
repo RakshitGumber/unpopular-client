@@ -1,0 +1,204 @@
+.feed-card-container {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--secondary-background);
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column nowrap;
+}
+
+.feed-card-container .user-tag {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.feed-card-container .row {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.feed-card-container .user-tag > img {
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+}
+
+.feed-card-container .userinfo {
+  display: flex;
+  flex-flow: column;
+}
+
+.userinfo > p.strong {
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.userinfo > p.weak {
+  font-size: 0.8rem;
+  color: var(--secondary-text);
+}
+
+.feed-card-container .post-title {
+  font-size: 1.5rem;
+  padding: 0 0.5rem;
+  line-height: 2rem;
+}
+
+.feed-card-container .post-content {
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  line-height: 1.6rem;
+}
+
+.feed-card-container .fade {
+  mask-image: none;
+  max-height: 100px;
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+}
+
+.feed-card-container .more {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 0.8rem;
+  margin: 0.5rem;
+  align-self: flex-end;
+}
+
+.feed-card-container .more:hover {
+  cursor: pointer;
+  color: var(--secondary-text);
+}
+
+.feed-card-container .more:active {
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.feed-card-container .post-images {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.feed-card-container .post-images > img {
+  border-radius: 0.5rem;
+  background-color: var(--background);
+}
+
+.feed-card-container .post-images > img.grid-image-view {
+  object-fit: cover;
+  flex-basis: calc(50% - 1rem);
+  flex-grow: 1;
+  width: 100%;
+  aspect-ratio: 3/2;
+}
+
+.feed-card-container .post-images > img.cover-image {
+  object-fit: cover;
+  flex-basis: calc(50% - 1rem);
+  flex-grow: 1;
+  width: 100%;
+  aspect-ratio: 3/2;
+}
+
+.feed-card-container .post-images > img.fit-contain {
+  object-fit: contain;
+}
+
+.feed-card-container .post-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.feed-card-container .icon-button {
+  background-color: var(--primary);
+  outline: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 300ms;
+}
+
+.feed-card-container .icon-button:hover {
+  background-color: var(--accent);
+}
+
+.feed-card-container .icon-button:active {
+  filter: brightness(0.5);
+}
+
+.feed-card-container .selected-button {
+  background-color: var(--secondary);
+}
+
+.feed-card-container .post-actions .post-reactivity {
+  display: flex;
+  background-color: var(--primary);
+  border-radius: 1rem;
+}
+
+.feed-card-container
+  .post-actions
+  .post-reactivity
+  .icon-button:not(:last-child) {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.feed-card-container
+  .post-actions
+  .post-reactivity
+  .icon-button:not(:first-child) {
+  border-radius: 0 1rem 1rem 0;
+}
+
+.feed-card-container .post-reactivity span {
+  background-color: var(--primary);
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feed-card-container .more-options {
+  position: absolute;
+  background-color: var(--background);
+  width: 12rem;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0.5rem;
+  border-radius: 1rem 0 1rem 1rem;
+  right: 3rem;
+  top: 1rem;
+  z-index: 2;
+}
+
+.feed-card-container .more-options > button {
+  height: 3rem;
+  background-color: var(--background);
+  border: none;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  color: var(--text);
+  border-radius: 1rem;
+}
+
+.feed-card-container .more-options > button:hover {
+  background-color: var(--secondary-background);
+}
+
+.feed-card-container .more-options > button:active {
+  filter: brightness(0.5);
+}

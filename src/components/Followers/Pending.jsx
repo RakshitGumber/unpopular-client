@@ -1,50 +1,49 @@
 import React, { useEffect, useState } from "react";
 import FollowerCard from "./FollowerCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   getPendingRequest,
   rejectRequest,
   acceptRequest,
-} from "../../store/actions/followers";
+} from "../../toolkit/actions/followerActions";
 import Loader from "../Loader/Loader";
 
 const Pending = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
+  const { outgoing, loading } = useSelector((state) => state.people);
 
   let pendingActions = [
     {
       name: "accept",
       do: (requestorId) => {
-        dispatch(acceptRequest(id, requestorId));
+        dispatch(acceptRequest({id, requestorId}));
       },
     },
     {
       name: "reject",
       do: (requestorId) => {
-        dispatch(rejectRequest(id, requestorId));
+        dispatch(rejectRequest({id, requestorId}));
       },
     },
   ];
 
   useEffect(() => {
-    const fetchPending = async () => {
-      try {
-        const fetchedRequests = await dispatch(getPendingRequest(id));
-        setRequests(fetchedRequests);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
-
-    fetchPending();
+    dispatch(getPendingRequest(id));
+    setPageLoading(true);
   }, [dispatch, id]);
-  if (loading) {
+
+  useEffect(() => {
+    if (!loading && outgoing) {
+      setPageLoading(false);
+      setRequests(outgoing);
+    }
+  }, [loading, outgoing]);
+
+  if (pageLoading) {
     return <Loader />;
   }
 

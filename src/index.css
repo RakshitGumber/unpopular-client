@@ -15,6 +15,8 @@
   --secondary-text: #9696bf;
   --text: white;
   --primary: #7b00ff;
+  --secondary: #bf00ff;
+  --accent: #e90c59;
   --border: #2d2d2d;
 }
 
@@ -73,6 +75,27 @@ ul {
 
 li {
   list-style: none;
+}
+input {
+  font-family: "Cabin";
+}
+
+textarea {
+  font-family: "Cabin";
+}
+button {
+  font-family: "Cabin";
+  color: var(--text);
+  background-color: var(--secondary-background);
+  border: none;
+}
+
+button:hover {
+  filter: brightness(1.5);
+}
+
+button:active {
+  filter: brightness(0.5);
 }
 
 /* Scroll Bar design */

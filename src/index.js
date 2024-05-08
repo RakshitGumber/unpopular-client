@@ -3,15 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
-import { thunk } from "redux-thunk";
-import reducers from "./store/reducers";
-
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+import { persistor, store } from "./toolkit/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>
 );

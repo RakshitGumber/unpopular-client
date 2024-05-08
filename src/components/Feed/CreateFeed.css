@@ -1,0 +1,140 @@
+.create-post-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  transform: translateX(-50%);
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.create-post-wrapper .create-post-form {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 100%;
+  gap: 0.5rem;
+}
+
+.create-post-wrapper .create-post-form > .input {
+  height: 3rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: var(--secondary-background);
+  border: none;
+  color: var(--text);
+  resize: none;
+}
+
+.create-post-wrapper .create-post-form > .input:last-of-type {
+  height: 7rem;
+}
+
+.create-post-wrapper .create-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  background-color: var(--background);
+  width: 50vw;
+  max-width: 400px;
+  aspect-ratio: 5/6;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem 0 var(--primary);
+  padding: 2rem;
+}
+
+.create-post-wrapper .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-post-wrapper .close-btn:hover {
+  background-color: var(--accent);
+}
+
+.create-post-wrapper .close-btn:active {
+  background-color: var(--primary);
+}
+
+.create-post-wrapper .icon-btn {
+  margin: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 1rem;
+  color: var(--text);
+  font-size: 1rem;
+  position: relative;
+  left: -47%;
+  top: -1rem;
+  transition: 300ms all ease-in-out;
+}
+
+.create-post-wrapper .icon-btn > .icon {
+  transform: translateX(5px);
+}
+
+.create-post-wrapper .icon-btn:hover {
+  width: 10rem;
+  left: calc(-47% + 3.5rem);
+}
+
+.create-post-wrapper .icon-btn::after {
+  content: "";
+  transition: all 0.3s 0.2s;
+  scale: 0;
+}
+
+.create-post-wrapper .icon-btn:hover::after {
+  display: flex;
+  content: "Load Draft";
+  scale: 1;
+}
+
+.create-post-wrapper .icon-btn:active {
+  background-color: var(--accent);
+}
+
+.create-post-wrapper .btn-wrapper {
+  margin: 1rem 0;
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+
+.create-post-wrapper .btn-wrapper > button {
+  width: 100%;
+  height: 3rem;
+  border-radius: 1rem;
+  background-color: var(--primary);
+  font-size: 1rem;
+  transition: 300ms all;
+}
+
+.create-post-wrapper .btn-wrapper > button:hover {
+  background-color: var(--secondary);
+}
+
+.create-post-wrapper .btn-wrapper > button:active {
+  background-color: var(--accent);
+}

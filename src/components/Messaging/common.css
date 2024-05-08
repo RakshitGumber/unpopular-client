@@ -1,0 +1,12 @@
+.msg-panel-wrapper {
+  height: 100%;
+  width: 20%;
+  min-width: 18rem;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 1rem;
+  overflow: hidden;
+  border: 1px solid red;
+}

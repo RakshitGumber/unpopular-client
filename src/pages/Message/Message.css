@@ -1,0 +1,14 @@
+.message-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 100dvh;
+  /* overflow: hidden; */
+}
+
+.message-wrapper .message-cont {
+  flex-grow: 1;
+  max-width: 730px;
+  display: flex;
+  flex-flow: column;
+  position: relative;
+}

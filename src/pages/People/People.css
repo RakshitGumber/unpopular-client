@@ -1,10 +1,37 @@
 .friends-wrapper {
   display: flex;
   justify-content: center;
+  overflow: hidden;
+  height: 100vh;
 }
 
 .friends-main {
   flex-grow: 1;
   padding: 1rem;
   max-width: 730px;
+}
+
+.friends-wrapper .search {
+  width: 100%;
+  height: 3rem;
+  border-radius: 3rem;
+  margin: 1rem 0;
+  background-color: var(--secondary-background);
+  border: none;
+  padding: 1rem;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+.friends-wrapper .results {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  gap: 1rem;
+  /* border: 1px solid brown; */
+}
+
+@media only screen and (max-width: 767px) {
+  .friends-wrapper {
+    flex-flow: column nowrap;
+  }
 }

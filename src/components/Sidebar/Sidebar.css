@@ -7,7 +7,7 @@
   flex-flow: column nowrap;
   align-items: center;
   padding: 1rem;
-  position: relative;
+  overflow: hidden;
 }
 
 .elements {
@@ -23,7 +23,11 @@
   color: var(--text);
 }
 .elements > a.selected > .btn {
-  background-color: var(--primary);
+  background-color: var(--secondary);
+}
+
+.elements > a.selected > .btn:hover {
+  background-color: var(--accent);
 }
 
 .btn {
@@ -35,9 +39,10 @@
   border-radius: 1rem;
   margin-right: 0.5rem;
   gap: 1rem;
+  transition: all 300ms;
 }
 .btn:hover {
-  filter: brightness(1.2);
+  background-color: var(--accent);
 }
 
 .btn:active {
@@ -130,13 +135,13 @@
   filter: brightness(0.8);
 }
 
-@media only screen and (max-width: 767px) {
-  .sidebar-wrapper {
-    display: none;
+@media only screen and (min-width: 1200px) {
+  .sidebar-wrapper > h1::after {
+    content: "npopular";
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
+@media only screen and (min-width: 768px) and (max-width: 1199.9px) {
   .sidebar-wrapper {
     height: 100%;
     width: 2%;
@@ -165,8 +170,8 @@
   }
 }
 
-@media only screen and (min-width: 1200px) {
-  .sidebar-wrapper > h1::after {
-    content: "npopular";
+@media only screen and (max-width: 767.9px) {
+  .sidebar-wrapper {
+    display: none;
   }
 }

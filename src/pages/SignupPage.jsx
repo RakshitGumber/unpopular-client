@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../store/actions/user";
-import { useDispatch } from "react-redux";
+import { signup } from "../toolkit/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
 
 const initialState = {
@@ -18,18 +18,34 @@ const SignupPage = () => {
   // const [showFirstPage, setShowFirstPage] = useState(true);
   // const [showSecondPage, setShowSecondPage] = useState(false);
   // const [showThirdPage, setShowThirdPage] = useState(false);
+
+  const { userInfo, success } = useSelector(
+    (state) => state.user
+  );
+
   const [formData, setFormData] = useState(initialState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signup(formData, navigate));
+
+    formData.email = formData.email.toLowerCase();
+    dispatch(signup(formData));
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  // All the naviagtion and other logic for registration request
+  useEffect(() => {
+    // Just send him to login if user was created
+    if (success) navigate("../login");
+    // If the user has details then he is logged in, send him to main screen
+    if (userInfo) navigate("../home");
+    //
+  }, [navigate, userInfo, success]);
 
   return (
     <div className="form-container">

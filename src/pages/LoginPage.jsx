@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../store/actions/user";
-import { useDispatch } from "react-redux";
+import { login } from "../toolkit/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const initialState = {
   email: "",
@@ -9,6 +9,8 @@ const initialState = {
 };
 
 const LoginPage = ({ setUser }) => {
+  const { userInfo } = useSelector((state) => state.user);
+
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,11 +21,14 @@ const LoginPage = ({ setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(login(formData)).then(() => {
-      setUser(JSON.parse(localStorage.getItem("user")));
-      navigate("../home");
-    });
+    dispatch(login(formData));
+    await setUser(JSON.parse(localStorage.getItem("user")));
+    navigate("../home");
   };
+
+  useEffect(() => {
+    if (userInfo) navigate("../home");
+  }, [navigate, userInfo]);
 
   return (
     <>

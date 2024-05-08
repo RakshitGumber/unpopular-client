@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import FollowerCard from "./FollowerCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   getFollowingList,
   removeFollowing,
-} from "../../store/actions/followers";
+} from "../../toolkit/actions/followerActions";
 import Loader from "../Loader/Loader";
 
 const Following = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [following, setFollowing] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { loading, following } = useSelector((state) => state.people);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const followingActions = [
     {
@@ -32,21 +32,15 @@ const Following = () => {
   ];
 
   useEffect(() => {
-    const fetchFollowings = async () => {
-      try {
-        const fetchedFollowings = await dispatch(getFollowingList(id));
-        setFollowing(fetchedFollowings);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
-
-    fetchFollowings();
+    dispatch(getFollowingList(id));
+    setPageLoading(true);
   }, [dispatch, id]);
 
-  if (loading) {
+  useEffect(() => {
+    !loading && following && setPageLoading(false);
+  }, [loading, following]);
+
+  if (pageLoading) {
     return <Loader />;
   }
 

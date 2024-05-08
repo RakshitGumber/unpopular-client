@@ -1,33 +1,43 @@
 import React, { useState, useEffect } from "react";
 import "./Feed.css";
-import FeedCard from "./FeedCard/FeedCard";
-import { useDispatch } from "react-redux";
+import FeedCard from "../FeedCard/FeedCard";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
-import { getPost } from "../../store/actions/posts";
+import { getPost } from "../../toolkit/actions/postActions";
 
 function Feed() {
-  const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [pagePosts, setPagePosts] = useState([]);
   const dispatch = useDispatch();
+
+  const { loading, posts } = useSelector((state) => state.post);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const post = await dispatch(getPost());
-      setPosts(post);
-      setLoading(false);
+      dispatch(getPost());
     };
 
     fetchPosts();
   }, [dispatch]);
 
-  if (loading || posts === undefined) return <Loader />;
+  useEffect(() => {
+    if (loading) {
+      setPageLoading(true);
+    }
+    if (posts) {
+      setPageLoading(false);
+      setPagePosts(posts);
+    }
+  }, [loading, posts]);
+
+  if (pageLoading || pagePosts?.length === 0) return <Loader />;
 
   return (
     <div className="feed-wrapper">
       <h2>Feed</h2>
       <div className="feeds">
-        {posts.map((post) => (
-          <FeedCard data={post} key={post.id} />
+        {pagePosts.toReversed().map((post, id) => (
+          <FeedCard data={post} key={id} />
         ))}
       </div>
       <footer>

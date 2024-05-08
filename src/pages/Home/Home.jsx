@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Home.css";
-import { Sidebar, Feed, RightPanel } from "../../components";
-import { UserContext } from "../../App";
-import { Loader } from "../../components";
+import { Sidebar, Feed, RightPanel, BottomBar, TopBar } from "../../components";
 
 const Home = () => {
   return (
     <div className="home-page">
       <main className="content">
+        <TopBar />
         <Sidebar />
         <Feed />
         <RightPanel />
+        <BottomBar />
       </main>
     </div>
   );

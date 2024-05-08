@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef } from "react";
 import "./Sidebar.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -10,18 +10,19 @@ import {
   IoSettingsSharp,
 } from "react-icons/io5";
 import CreateFeed from "../Feed/CreateFeed";
-import { useOutsideClick, ShowImage } from "../../util";
-import { UserContext } from "../../App";
+import { useOutsideClick, ShowImage, infoToast } from "../../util";
+import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 function Sidebar() {
-  const iconSize = 32;
+  const iconSize = useRef(32);
   const [showUserActions, setShowUserActions] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const actionsRef = useRef(null);
   const userRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const user = useSelector((state) => state.user.userInfo);
 
   // Custome hook to detect if the person clicked outside
   useOutsideClick(actionsRef, () => setShowUserActions(false), {
@@ -33,110 +34,114 @@ function Sidebar() {
       id: 0,
       name: "Feed",
       path: "/home",
-      icon: <IoCompassOutline size={iconSize} />,
+      morePaths: ["/posts/"],
+      icon: <IoCompassOutline size={iconSize.current} />,
     },
     {
       id: 1,
       name: "Messages",
-      path: `/user/${user._id}/chat/`,
-      icon: <IoChatboxOutline size={iconSize} />,
+      path: `/chat`,
+      icon: <IoChatboxOutline size={iconSize.current} />,
     },
     {
       id: 3,
       name: "Friends",
-      path: `/people/${user._id}/followers`,
+      path: `/people/${user?._id}/followers`,
       morePaths: [
-        `/people/${user._id}/following`,
-        `/people/${user._id}/pending`,
+        `/people/${user?._id}/following`,
+        `/people/${user?._id}/pending`,
       ],
-      icon: <IoPeopleOutline size={iconSize} />,
+      icon: <IoPeopleOutline size={iconSize.current} />,
     },
     {
       id: 2,
       name: "Profile",
-      path: `/user/${user._id}/posts`,
-      morePaths: [`/user/${user._id}/followers`, `/user/${user._id}/following`],
-      icon: <IoPersonCircleOutline size={iconSize} />,
+      path: `/user/${user?._id}/posts`,
+      morePaths: [
+        `/user/${user?._id}/followers`,
+        `/user/${user?._id}/following`,
+      ],
+      icon: <IoPersonCircleOutline size={iconSize.current} />,
     },
   ];
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
-    <div className="sidebar-wrapper">
-      <h1>U</h1>
-      <div className="user-wrapper">
-        <div ref={userRef} className="user">
-          <ShowImage
-            image={user.profilepic}
-            firstname={user.firstName}
-            lastname={user.lastName}
-          />
-          <div
-            className="user-info"
-            onClick={() => setShowUserActions(!showUserActions)}
-          >
-            <p className="strong">
-              {user.firstName} {user.lastName}
-            </p>
-            <p className="weak">@{user.username}</p>
+    <>
+      <div className="sidebar-wrapper">
+        <h1>U</h1>
+        <div className="user-wrapper">
+          <div ref={userRef} className="user">
+            <ShowImage
+              image={user?.profilepic}
+              firstname={user?.firstName}
+              lastname={user?.lastName}
+            />
+            <div
+              className="user-info"
+              onClick={() => setShowUserActions(!showUserActions)}
+            >
+              <p className="strong">
+                {user?.firstName} {user?.lastName}
+              </p>
+              <p className="weak">@{user?.username}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="elements">
-        <div
-          className="btn"
-          onClick={() => {
-            setShowCreate(true);
-          }}
-        >
-          <IoAddSharp />
-          <span className="name">Create</span>
-        </div>
-        {data.map((item) => (
-          <Link
-            key={item.id}
-            to={item.path}
-            className={
-              location.pathname === item.path ||
-              item.morePaths?.includes(location.pathname)
-                ? "selected"
-                : ""
-            }
-          >
-            <div className="btn">
-              {item.icon}
-              <span className="name">{item.name}</span>
-            </div>
-          </Link>
-        ))}
-      </div>
-      {showUserActions && (
-        <div ref={actionsRef} className="user-actions">
-          <button
-            className="action"
+        <div className="elements">
+          <div
+            className="btn"
             onClick={() => {
-              localStorage.removeItem("user");
-              navigate("../");
+              setShowCreate(true);
             }}
           >
-            Log Out
-          </button>
-          <button
-            className="action"
-            onClick={() => {
-              navigate(`../user/${user._id}/settings`);
-            }}
-          >
-            <IoSettingsSharp />
-            Settings
-          </button>
+            <IoAddSharp size={iconSize.current} />
+            <span className="name">Create</span>
+          </div>
+          {data.map((item) => (
+            <Link
+              key={item.id}
+              to={item.path}
+              className={
+                location.pathname === item.path ||
+                item.morePaths?.includes(location.pathname)
+                  ? "selected"
+                  : ""
+              }
+            >
+              <div className="btn">
+                {item.icon}
+                <span className="name">{item.name}</span>
+              </div>
+            </Link>
+          ))}
         </div>
-      )}
+        {showUserActions && (
+          <div ref={actionsRef} className="user-actions">
+            <button
+              className="action"
+              onClick={() => {
+                localStorage.removeItem("user");
+                navigate("../");
+              }}
+            >
+              Log Out
+            </button>
+            <button
+              className="action"
+              onClick={() => {
+                navigate(`../user/${user?._id}/settings`);
+              }}
+            >
+              <IoSettingsSharp />
+              Settings
+            </button>
+          </div>
+        )}
+        <button onClick={() => infoToast("This works")}>Notfiy</button>
+        <ToastContainer />
+      </div>
       {showCreate && <CreateFeed setShowCreate={setShowCreate} />}
-    </div>
+    </>
   );
 }
 

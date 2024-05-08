@@ -1,14 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "../../store/actions/user";
+import { getUser, updateUser } from "../../toolkit/actions/userActions";
+import { sendRequest } from "../../toolkit/actions/followerActions";
 import {
   Link,
   Outlet,
   useLocation,
-  useNavigate,
   useParams,
 } from "react-router-dom";
-import { Loader, Sidebar, RightPanel } from "../../components";
+import {
+  Loader,
+  Sidebar,
+  RightPanel,
+  TopBar,
+  BottomBar,
+} from "../../components";
 import "./UserDetails.css";
 import { ShowImage } from "../../util";
 import {
@@ -18,7 +24,6 @@ import {
   FaBriefcase,
 } from "react-icons/fa6";
 import moment from "moment";
-import { UserContext } from "../../App";
 
 const initialState = {
   firstName: "",
@@ -33,101 +38,76 @@ const initialState = {
 const UserDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const userData = useSelector((state) => state.userReducer.userData);
-  let user;
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const [editing, setEditing] = useState(false);
+  const { userGet, loading, userInfo } = useSelector((state) => state.user);
+  const { following, pending } = useSelector((state) => state.people);
   const [editable, setEditable] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState(initialState);
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing,] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
   const location = useLocation();
 
-  // Use effect
   useEffect(() => {
-    setLoading(true);
-    dispatch(getUser(id))
-      .then((data) => {
-        setLoading(false);
-        console.log(data);
-        if (
-          JSON.parse(localStorage.getItem("user")).user._id === data.user._id
-        ) {
-          setEditable(true);
-        }
-        if (
-          JSON.parse(localStorage.getItem("user")).user.followings.includes(
-            data.user._id
-          )
-        ) {
-          setIsFollowing(true);
-        }
-
-        if (
-          JSON.parse(localStorage.getItem("user")).user.followRequests.includes(
-            data.user._id
-          )
-        ) {
-          setIsPending(true);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching user details:", error);
-        setLoading(false);
-      });
+    dispatch(getUser(id));
   }, [dispatch, id]);
 
-  // Function for logging out
-  const logout = () => {
-    localStorage.removeItem("user");
-    navigate("../");
+  useEffect(() => {
+    if (userGet) {
+      if (userInfo._id === userGet._id) {
+        setEditable(true);
+      } else {
+        if (loading) return;
+        setEditable(false);
+        console.log(following, pending);
+      }
+    }
+  }, [userGet, userInfo, following, loading, pending]);
+
+  const sendFollowRequest = () => {
+    dispatch(sendRequest({ id: userInfo._id, userId: id }));
+    setIsPending(true);
   };
 
-  const sendFollowRequest = () => {};
-
-  // Function for handling for submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(updateUser(id, formData));
     setEditing(false);
   };
 
-  // Function for handling form change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   let aboutData = [];
-  if (userData) {
-    user = userData.user;
-    if (user.location)
+  if (userGet) {
+    if (userGet.location)
       aboutData.push({
         id: 0,
         icon: <FaLocationDot />,
-        text: user.location,
+        text: userGet.location,
       });
-    if (user.dateOfBirth)
+    if (userGet.dateOfBirth)
       aboutData.push({
         id: 1,
         icon: <FaRegCalendar />,
-        text: moment(user.dateOfBirth).format("Do MMM y"),
+        text: moment(userGet.dateOfBirth).format("Do MMM y"),
       });
 
-    if (user.desc)
+    if (userGet.desc)
       aboutData.push({
         id: 2,
         icon: <FaBriefcase />,
-        text: user.desc,
+        text: userGet.desc,
       });
   }
 
   return (
-    <div div className="user-details-wrapper">
+    <div className="user-details-wrapper">
+      <TopBar />
       <Sidebar />
       <div className="main">
-        {loading || !userData ? (
+        {loading || !userGet ? (
           <Loader />
         ) : (
           <>
@@ -136,9 +116,9 @@ const UserDetails = () => {
               <div className="mask" />
               <div className="pic">
                 <ShowImage
-                  image={user.profilepic}
-                  firstname={user.firstName}
-                  lastname={user.lastName}
+                  image={userGet.profilepic}
+                  firstname={userGet.firstName}
+                  lastname={userGet.lastName}
                 />
                 <div className="status" />
               </div>
@@ -146,9 +126,9 @@ const UserDetails = () => {
                 <div className="user-info">
                   <div>
                     <p className="strong">
-                      {user.firstName} {user.lastName}
+                      {userGet.firstName} {userGet.lastName}
                     </p>
-                    <p className="weak">@{user.username}</p>
+                    <p className="weak">@{userGet.username}</p>
                   </div>
                   {editable ? (
                     <button
@@ -158,10 +138,12 @@ const UserDetails = () => {
                     >
                       <FaPencil size={24} />
                     </button>
+                  ) : isPending ? (
+                    <button>Pending</button>
+                  ) : isFollowing ? (
+                    <button>Following</button>
                   ) : (
-                    isFollowing || (
-                      <button onClick={sendFollowRequest}>Follow</button>
-                    )
+                    <button onClick={sendFollowRequest}>Follow</button>
                   )}
                 </div>
               </div>
@@ -174,7 +156,7 @@ const UserDetails = () => {
                   type="text"
                   name="firstName"
                   onChange={handleChange}
-                  placeholder={user.firstName}
+                  placeholder={userGet.firstName}
                 />
                 <button type="submit" onClick={handleSubmit}>
                   Save Changes
@@ -192,9 +174,9 @@ const UserDetails = () => {
             <div className="content">
               <div className="prof-about">
                 <h3>About me</h3>
-                {user.bio && (
+                {userGet.bio && (
                   <>
-                    <p className="weak">"{user.bio}"</p>
+                    <p className="weak">"{userGet.bio}"</p>
                   </>
                 )}
                 {aboutData.map((item) => (
@@ -239,9 +221,9 @@ const UserDetails = () => {
         )}
       </div>
       <RightPanel />
+      <BottomBar />
     </div>
   );
-  // sett all data to show user data
 };
 
 export default UserDetails;

@@ -1,0 +1,20 @@
+.search-card {
+  flex-grow: 1;
+  background-color: var(--secondary-background);
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.search-card > img {
+  border-radius: 50%;
+}
+
+.search-card .follow-button {
+  margin-left: auto;
+}
+.search-card .btn {
+  background-color: var(--secondary-background);
+  margin-left: auto;
+}
