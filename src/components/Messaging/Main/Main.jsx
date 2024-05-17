@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./Main.css";
 import { Loader } from "../../index";
+import Nav from "../Nav/Nav";
 
 import { FaPaperPlane } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 export default function Main({ socket }) {
   const [message, setMessage] = useState("");
   const { roomId } = useParams();
   const [chat, setChat] = useState([]);
   const [typing, setTyping] = useState(false);
+  const [searchParams] = useSearchParams();
+
+  const roomName = searchParams.get("name");
 
   useEffect(() => {
     if (!socket) return;
@@ -46,6 +50,7 @@ export default function Main({ socket }) {
 
   return (
     <div className="chat-wrapper">
+      <Nav roomName={roomName} />
       <div className="top">
         {chat.map((data) => (
           <div className={data.received ? "left-bubble" : "right-bubble"}>

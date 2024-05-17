@@ -2,17 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, updateUser } from "../../toolkit/actions/userActions";
 import { sendRequest } from "../../toolkit/actions/followerActions";
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import {
   Loader,
   Sidebar,
   RightPanel,
-  TopBar,
+  Navbar,
   BottomBar,
 } from "../../components";
 import "./UserDetails.css";
@@ -43,7 +38,7 @@ const UserDetails = () => {
   const [editable, setEditable] = useState(false);
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState(initialState);
-  const [isFollowing,] = useState(false);
+  const [isFollowing] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
   const location = useLocation();
@@ -104,7 +99,7 @@ const UserDetails = () => {
 
   return (
     <div className="user-details-wrapper">
-      <TopBar />
+      <Navbar />
       <Sidebar />
       <div className="main">
         {loading || !userGet ? (
@@ -212,7 +207,11 @@ const UserDetails = () => {
                     Following
                   </Link>
                 </div>
-                <div className="switch-content">
+                <div
+                  className={`switch-content ${
+                    location.pathname.includes("posts") ? "no-padding" : ""
+                  }`}
+                >
                   <Outlet />
                 </div>
               </div>

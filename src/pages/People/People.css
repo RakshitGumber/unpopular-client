@@ -22,15 +22,42 @@
   color: var(--text);
   font-size: 1.1rem;
 }
+
+.friends-wrapper .search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .friends-wrapper .results {
   display: flex;
   flex-flow: column nowrap;
-  width: 100%;
+  width: calc(100%);
   gap: 1rem;
+  z-index: 10;
+  position: absolute;
+  background-color: var(--background);
   /* border: 1px solid brown; */
 }
+.friends-wrapper .sect-headers {
+  display: flex;
+  justify-content: space-around;
+}
 
-@media only screen and (max-width: 767px) {
+.sect-headers > a {
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.sect-headers .selected {
+  border-bottom: 5px solid var(--primary);
+}
+
+.friends-wrapper .sect-content {
+  padding: 1rem 0rem;
+}
+
+@media only screen and (max-width: 767.9px) {
   .friends-wrapper {
     flex-flow: column nowrap;
   }

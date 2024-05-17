@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import "./FeedCard.css";
 import { ShowImage } from "../../util";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { SpButton } from "../../util";
 import { IoChatbubbleSharp, IoEllipsisVertical } from "react-icons/io5";
 import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
-import { likePost, dislikePost } from "../../toolkit/actions/postActions";
+import {
+  likePost,
+  dislikePost,
+  deletePost,
+} from "../../toolkit/actions/postActions";
 import { sendRequest } from "../../toolkit/actions/followerActions";
+import { FeedControlContext } from "..";
 
 function FeedCard({ data }) {
   const [overflowActive, setOverflowActive] = useState(false);
@@ -16,6 +21,8 @@ function FeedCard({ data }) {
   const [showMore, setShowMore] = useState(false);
   const [showFullImage, setShowFullImage] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
+  const { setShowCreate, setEditing, setPostValue } =
+    useContext(FeedControlContext);
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userInfo);
   const [isFollowing] = useState(false);
@@ -97,6 +104,23 @@ function FeedCard({ data }) {
     navigate(`/posts/${data._id}`);
   };
 
+  const deleteThisPost = () => {
+    dispatch(deletePost({ id: data._id }));
+    setShowMoreOptions(false);
+  };
+
+  const editPost = () => {
+    setShowCreate(true);
+    setEditing(true);
+    setPostValue({
+      id: data._id,
+      title: data.title ?? "",
+      message: data.message ?? "",
+      images: data.images === undefined ? [] : data.images,
+    });
+    setShowMoreOptions(false);
+  };
+
   const { creator } = data;
   return (
     <div className="feed-card-container">
@@ -148,8 +172,8 @@ function FeedCard({ data }) {
         )}
         {showMoreOptions && (
           <div className="more-options">
-            <button>edit</button>
-            <button>delete</button>
+            <button onClick={editPost}>edit</button>
+            <button onClick={deleteThisPost}>delete</button>
           </div>
         )}
       </div>
@@ -186,8 +210,8 @@ function FeedCard({ data }) {
       <div className="post-actions">
         <div className="post-reactivity">
           <button
-            className={`icon-button  ${
-              dataState.current.liked && "selected-button"
+            className={`icon-button ${
+              dataState.current.liked ? "selected-button" : ""
             }`}
             onClick={likePostFunc}
           >
@@ -196,7 +220,7 @@ function FeedCard({ data }) {
           <span>{postState.likes - postState.dislikes}</span>
           <button
             className={`icon-button ${
-              dataState.current.disliked && "selected-button"
+              dataState.current.disliked ? "selected-button" : ""
             }`}
             onClick={dislikePostFunc}
           >

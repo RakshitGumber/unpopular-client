@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  signup,
-  login,
-  getUser,
-  updateUser,
-  followUser,
-} from "../actions/userActions";
+import { signup, login, getUser, updateUser } from "../actions/userActions";
 
 const initialState = {
   loading: false, // Data is loading or not
@@ -19,7 +13,20 @@ const initialState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.userInfo = null;
+      state.userToken = null;
+      state.success = false;
+      state.error = null;
+      state.userGet = null;
+    },
+
+    resetUser: (state) => {
+      state.error = null;
+      state.success = false;
+    },
+  },
   extraReducers: (builder) => {
     // *  SignUp Cases
     builder.addCase(signup.pending, (state) => {
@@ -44,6 +51,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.userInfo = action.payload.user;
       state.userToken = action.payload.token;
+      state.success = true;
     });
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;
@@ -78,24 +86,11 @@ export const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
-
-    // * Send Follow Request Cases
-    builder.addCase(followUser.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(followUser.fulfilled, (state, action) => {
-      state.loading = false;
-      state.pendingFollowing = [...state.pendingFollowing, action.payload];
-      state.success = "sendRequestSuccess";
-    });
-    builder.addCase(followUser.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    });
   },
 });
 
 // Action creators are generated for each case reducer function
+
+export const { logout, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;

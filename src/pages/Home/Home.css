@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 767.5px) {
   .home-page > .content {
     flex-flow: column nowrap;
   }

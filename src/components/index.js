@@ -1,3 +1,4 @@
+import { createContext } from "react";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as Sidebar } from "./Sidebar/Sidebar";
 export { default as SearchUserResult } from "./Search/SearchUserResult";
@@ -12,3 +13,7 @@ export { default as TopBar } from "./MobileBars/Top/Top";
 export { default as BottomBar } from "./MobileBars/Bottom/Bottom";
 export { default as FeedCard } from "./FeedCard/FeedCard";
 export { MessagingMain, MessagingLeft, MessagingRight } from "./Messaging";
+
+const FeedControlContext = createContext(null);
+const UserActionsControlContext = createContext(null);
+export { FeedControlContext, UserActionsControlContext };

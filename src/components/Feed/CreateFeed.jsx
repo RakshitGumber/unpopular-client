@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../../toolkit/actions/postActions";
+import { createPost, updatePost } from "../../toolkit/actions/postActions";
 import { saveDraft } from "../../toolkit/slices/postSlice";
 import { IoClose } from "react-icons/io5";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import "./CreateFeed.css";
+import { FeedControlContext } from "..";
 
 const initialState = {
   title: "",
@@ -16,9 +17,11 @@ const initialState = {
 
 const CreateFeed = ({ setShowCreate }) => {
   const [formData, setFormData] = useState(initialState);
+  const [thisid, setThisId] = useState("");
   const dispatch = useDispatch();
   const creator = useSelector((state) => state.user.userInfo._id);
-  const draft = useSelector((state) => state.post.draft) || initialState;
+  const { draft } = useSelector((state) => state.post) || initialState;
+  const { editing, postValue } = useContext(FeedControlContext);
 
   const closeWidget = () => {
     setShowCreate(false);
@@ -30,8 +33,14 @@ const CreateFeed = ({ setShowCreate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formData.creator = creator;
-    dispatch(createPost(formData));
+    if (editing) {
+      dispatch(updatePost({ id: thisid, post: formData }));
+      closeWidget();
+    } else {
+      formData.creator = creator;
+      dispatch(createPost(formData));
+      closeWidget();
+    }
   };
 
   const saveDraftFunc = (e) => {
@@ -51,22 +60,26 @@ const CreateFeed = ({ setShowCreate }) => {
     setFormData({ ...formData, images: newImages });
   };
 
+  useEffect(() => {
+    if (editing) {
+      setFormData(postValue);
+      setThisId(postValue.id);
+    }
+  }, [editing, postValue, setThisId]);
+
   return (
     <div className="create-post-wrapper">
       <div className="create-post-container">
-        <button className="icon-btn" onClick={loadDraft}>
-          <FaClockRotateLeft className="icon" size={24} />
-        </button>
+        <h1>{editing ? "Edit" : "Create"}</h1>
+        {!editing && (
+          <button className="icon-btn" onClick={loadDraft}>
+            <FaClockRotateLeft className="icon" size={24} />
+          </button>
+        )}
         <button className="close-btn" onClick={closeWidget}>
           <IoClose size={48} />
         </button>
-        {formData.images.length !== 0 &&
-          formData.images.map((image) => (
-            <div key={image.length}>
-              <img src={image} alt="post selected by you" width="200px" />
-              <button onClick={() => removeImage(image)}>x</button>
-            </div>
-          ))}
+
         <form
           action="create-post-form"
           onSubmit={handleSubmit}
@@ -104,9 +117,29 @@ const CreateFeed = ({ setShowCreate }) => {
               });
             }}
           />
+          <section className="images">
+            {console.log(formData.images)}
+            {formData.images.length !== 0 &&
+              formData.images.map((image, id) => (
+                <div key={id}>
+                  <img
+                    className="image"
+                    src={image}
+                    alt="post selected by you"
+                    width="200px"
+                  />
+                  <button
+                    className="img-btn"
+                    onClick={() => removeImage(image)}
+                  >
+                    <IoClose size={20} />
+                  </button>
+                </div>
+              ))}
+          </section>
           <section className="btn-wrapper">
             <button type="submit">Send</button>
-            <button onClick={saveDraftFunc}>Save as Draft</button>
+            {!editing && <button onClick={saveDraftFunc}>Save as Draft</button>}
           </section>
         </form>
       </div>

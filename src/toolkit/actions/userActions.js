@@ -18,10 +18,9 @@ export const login = createAsyncThunk(
   async (formData, thunkAPI) => {
     try {
       const { data } = await api.login(formData);
-      localStorage.setItem("token", data.token);
       return data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err.message);
+      return thunkAPI.rejectWithValue(err.response.data.message);
     }
   }
 );
@@ -46,19 +45,6 @@ export const updateUser = createAsyncThunk(
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
-    }
-  }
-);
-
-export const followUser = createAsyncThunk(
-  "user/sendRequest",
-  async ({ id, userId }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.sendRequest(id, userId);
-      console.log(data);
-      return data;
-    } catch (err) {
-      return rejectWithValue(err);
     }
   }
 );

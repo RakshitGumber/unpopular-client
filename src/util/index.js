@@ -8,3 +8,4 @@ export {
   errorToast,
   warnToast,
 } from "./toasts";
+export { default as ProtectedRoute } from "./ProtectedRoute";

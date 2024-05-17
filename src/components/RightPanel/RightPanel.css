@@ -1,14 +1,109 @@
 .panel-wrapper {
   width: 20%;
   min-width: 18rem;
-  padding: 1rem;
+  max-width: max(18rem, 20%);
+  padding: 2rem 1rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   overflow: hidden;
+}
+
+.panel-wrapper * {
+  margin: 10px 0px;
 }
 
 @media only screen and (max-width: 1024px) {
   .panel-wrapper {
     display: none;
   }
+}
+
+.search-form {
+  width: 100%;
+  display: flex;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-input {
+  width: 90%;
+  height: 3rem;
+  padding: 0.6rem 1.2rem;
+  background-color: var(--secondary-background);
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 1rem 0px 0px 1rem;
+}
+
+.search-input::placeholder {
+  color: gray;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-button {
+  background-color: var(--secondary-background);
+  font-size: 1.2rem;
+  color: gray;
+  height: 100%;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 5px;
+  border-radius: 0px 1rem 1rem 0px;
+}
+
+.trending-section {
+  border-radius: 10px;
+  padding: 5px 20px;
+  color: var(--secondary-text);
+  width: 100%;
+}
+
+.trending-card {
+  border-top: 2px solid var(--secondary-background);
+  width: 100%;
+}
+
+.trending-card h2 {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.trending-section h1 {
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.trending-card h2:hover {
+  color: white;
+}
+
+.trending-card h2::before {
+  content: "#";
+}
+
+.trending-card h2::after {
+  content: "...";
+}
+
+.post-results {
+  width: 100%;
+  background-color: var(--secondary-background);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.searched-post {
+  border-top: 1px solid var(--border);
+  padding: 10px 0px 0px;
+  color: var(--secondary-text);
 }

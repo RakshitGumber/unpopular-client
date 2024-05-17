@@ -153,6 +153,10 @@
   padding: 1rem;
 }
 
+.switch-section > .no-padding {
+  padding: 0;
+}
+
 @media only screen and (min-width: 481px) and (max-width: 767px) {
   .user-details-wrapper {
     flex-flow: column nowrap;

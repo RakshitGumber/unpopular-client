@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import "./Sidebar.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -10,23 +10,31 @@ import {
   IoSettingsSharp,
 } from "react-icons/io5";
 import CreateFeed from "../Feed/CreateFeed";
-import { useOutsideClick, ShowImage, infoToast } from "../../util";
-import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { useOutsideClick, ShowImage } from "../../util";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../toolkit/slices/userSlice";
+import { FeedControlContext, UserActionsControlContext } from "..";
 
 function Sidebar() {
   const iconSize = useRef(32);
-  const [showUserActions, setShowUserActions] = useState(false);
-  const [showCreate, setShowCreate] = useState(false);
-  const actionsRef = useRef(null);
+  const actions = useContext(UserActionsControlContext);
   const userRef = useRef(null);
+
+  const { showCreate, setShowCreate } = useContext(FeedControlContext);
+  const actionsRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userInfo);
+  const dispatch = useDispatch();
+  const [localUserRef, setLocalUserRef] = useState();
+
+  useEffect(() => {
+    setLocalUserRef(userRef);
+  }, [userRef]);
 
   // Custome hook to detect if the person clicked outside
-  useOutsideClick(actionsRef, () => setShowUserActions(false), {
-    notOnRef: userRef,
+  useOutsideClick(actionsRef, () => actions?.setShowUserActions(false), {
+    notOnRef: localUserRef,
   });
 
   const data = [
@@ -45,7 +53,7 @@ function Sidebar() {
     },
     {
       id: 3,
-      name: "Friends",
+      name: "People",
       path: `/people/${user?._id}/followers`,
       morePaths: [
         `/people/${user?._id}/following`,
@@ -75,10 +83,15 @@ function Sidebar() {
               image={user?.profilepic}
               firstname={user?.firstName}
               lastname={user?.lastName}
+              onClick={() =>
+                actions?.setShowUserActions(!actions.showUserActions)
+              }
             />
             <div
               className="user-info"
-              onClick={() => setShowUserActions(!showUserActions)}
+              onClick={() =>
+                actions.setShowUserActions(!actions.showUserActions)
+              }
             >
               <p className="strong">
                 {user?.firstName} {user?.lastName}
@@ -115,32 +128,31 @@ function Sidebar() {
             </Link>
           ))}
         </div>
-        {showUserActions && (
-          <div ref={actionsRef} className="user-actions">
-            <button
-              className="action"
-              onClick={() => {
-                localStorage.removeItem("user");
-                navigate("../");
-              }}
-            >
-              Log Out
-            </button>
-            <button
-              className="action"
-              onClick={() => {
-                navigate(`../user/${user?._id}/settings`);
-              }}
-            >
-              <IoSettingsSharp />
-              Settings
-            </button>
-          </div>
-        )}
-        <button onClick={() => infoToast("This works")}>Notfiy</button>
-        <ToastContainer />
       </div>
       {showCreate && <CreateFeed setShowCreate={setShowCreate} />}
+      {actions?.showUserActions && (
+        <div ref={actionsRef} className="user-actions">
+          <button
+            className="action"
+            onClick={() => {
+              localStorage.removeItem("token");
+              dispatch(logout());
+              navigate("/", { replace: true });
+            }}
+          >
+            Log Out
+          </button>
+          <button
+            className="action"
+            onClick={() => {
+              navigate(`../user/${user?._id}/settings`);
+            }}
+          >
+            <IoSettingsSharp />
+            Settings
+          </button>
+        </div>
+      )}
     </>
   );
 }

@@ -112,3 +112,9 @@ button:active {
   border-radius: 10px;
   background-color: var(--primary);
 }
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

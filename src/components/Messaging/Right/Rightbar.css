@@ -1,0 +1,26 @@
+.invalid-input {
+  border: 1px solid red;
+}
+
+@media only screen and (min-width: 1200px) {
+  .right-msg-panel {
+    position: relative;
+  }
+
+  .right-msg-panel button.icn-btn {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1199.9px) {
+  .right-msg-panel {
+    position: relative;
+    z-index: 15;
+    right: 0;
+    transform: translateX(100%);
+    transition: all 200ms ease-in-out;
+  }
+  .show-right-msg {
+    transform: translateX(0);
+  }
+}

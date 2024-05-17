@@ -7,27 +7,36 @@ import {
   removeFollowing,
 } from "../../toolkit/actions/followerActions";
 import Loader from "../Loader/Loader";
+import { FaTrash, FaPhone, FaMessage } from "react-icons/fa6";
+import { errorToast, successToast } from "../../util";
+import { resetFollowerState } from "../../toolkit/slices/followerSlice";
 
 const Following = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { loading, following } = useSelector((state) => state.people);
+  const { loading, following, success, error } = useSelector(
+    (state) => state.people
+  );
   const [pageLoading, setPageLoading] = useState(true);
+  const [myFollowing, setMyFollowing] = useState([]);
+  const [removed, setRemoved] = useState("");
 
   const followingActions = [
     {
-      name: "Chat",
+      name: <FaMessage size={24} />,
       do: () => {},
     },
     {
-      name: "remove",
+      name: <FaPhone size={24} />,
+      do: () => {},
+    },
+    {
+      name: <FaTrash size={24} />,
       do: (userId) => {
-        dispatch(removeFollowing(id, userId));
+        dispatch(removeFollowing({ id, userId }));
+        setRemoved(userId);
       },
-    },
-    {
-      name: "call",
-      do: () => {},
+      type: "red",
     },
   ];
 
@@ -37,21 +46,50 @@ const Following = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    !loading && following && setPageLoading(false);
+    if (!loading && following) {
+      setPageLoading(false);
+      setMyFollowing(following);
+    }
   }, [loading, following]);
+
+  useEffect(() => {
+    const showSuccessToast = () => {
+      if (success === null) return;
+
+      if (success === "followingRemoveSuccess") {
+        successToast("Following Removed Successfully");
+        setMyFollowing((prev) =>
+          prev.filter((following) => following._id !== removed)
+        );
+        dispatch(resetFollowerState());
+      }
+    };
+
+    const showErrorToast = () => {
+      if (error === null) return;
+
+      if (error === "followingRemoveError") {
+        errorToast("An Error occurred while removing the following");
+      }
+      dispatch(resetFollowerState());
+    };
+
+    showErrorToast();
+    showSuccessToast();
+    //
+  }, [success, dispatch, removed, error]);
 
   if (pageLoading) {
     return <Loader />;
   }
 
-  if (!following.data) {
-    return <h1>No following found</h1>;
+  if (myFollowing.length === 0) {
+    return <h2>No following found</h2>;
   }
 
   return (
     <>
-      <h1>Following</h1>
-      {following.data.map((follow) => (
+      {myFollowing.map((follow) => (
         <FollowerCard
           details={follow}
           key={follow._id}

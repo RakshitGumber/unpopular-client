@@ -135,9 +135,15 @@
   filter: brightness(0.8);
 }
 
-@media only screen and (min-width: 1200px) {
-  .sidebar-wrapper > h1::after {
-    content: "npopular";
+@media only screen and (max-width: 767.9px) {
+  .sidebar-wrapper {
+    display: none;
+  }
+  .user-actions {
+    border-radius: 1rem 0 1rem 1rem;
+    top: 4rem;
+    right: 4rem;
+    left: auto;
   }
 }
 
@@ -168,10 +174,28 @@
     width: 3.5rem;
     height: 3.5rem;
   }
+
+  .user-wrapper .user > img:hover {
+    filter: brightness(1.2);
+    outline: var(--secondary-text) solid 2px;
+  }
+
+  .user-wrapper .user > img:active {
+    filter: brightness(0.8);
+  }
+
+  .user-actions {
+    left: 5rem;
+    top: 8rem;
+    right: auto;
+  }
 }
 
-@media only screen and (max-width: 767.9px) {
-  .sidebar-wrapper {
-    display: none;
+@media only screen and (min-width: 1200px) {
+  .sidebar-wrapper > h1::after {
+    content: "npopular";
+  }
+  .user-wrapper .user > img {
+    pointer-events: none;
   }
 }

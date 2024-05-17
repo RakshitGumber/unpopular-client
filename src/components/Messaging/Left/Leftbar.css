@@ -1,0 +1,132 @@
+.left-msg-panel {
+  padding-left: 1rem;
+}
+
+.left-msg-panel .rooms {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.left-msg-panel .rooms > a {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  background-color: var(--secondary-background);
+  transition: all 100ms ease-in-out;
+  height: 5.5rem;
+}
+
+.left-msg-panel .rooms > a > .left > .weak {
+  height: 1.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.left-msg-panel .rooms > a:hover {
+  background-color: var(--primary);
+}
+
+.left-msg-panel .rooms a > .right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.left-msg-panel .rooms a > .right > .timestamp {
+  font-size: 0.7rem;
+  color: var(--secondary-text);
+}
+
+.left-msg-panel .rooms > a:hover > .left > .weak {
+  color: var(--text);
+}
+
+.left-msg-panel .rooms > a:hover > .right > .timestamp {
+  color: var(--text);
+}
+
+.left-msg-panel .rooms a > .right > .msg-count {
+  font-size: 0.6rem;
+  background-color: var(--primary);
+  width: 1.5rem;
+  aspect-ratio: 1/1;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-msg-panel .rooms > a:hover > .right .msg-count {
+  background-color: var(--secondary-background);
+}
+
+.left-msg-panel .rooms > a:active {
+  background-color: var(--secondary);
+}
+
+.left-msg-panel button.add-btn {
+  margin: auto 1rem 1rem 1rem;
+}
+
+.left-msg-panel button.left-btn {
+  flex-shrink: 0;
+}
+
+.left-msg-panel button.back-btn {
+  display: flex;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+@media only screen and (max-width: 767.9px) {
+  .left-msg-panel {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    transform: translateX(-100%);
+    transition: all 200ms ease-in-out;
+    width: 20vw;
+    height: calc(100% - 60px);
+    overflow: auto;
+  }
+
+  .show-left-panel {
+    transform: translateX(0);
+    z-index: 15;
+    height: calc(100% - 60px);
+  }
+}
+@media only screen and (min-width: 768px) {
+  .left-msg-panel {
+    position: static;
+    overflow: auto;
+  }
+
+  .left-msg-panel button.left-btn {
+    display: none;
+  }
+
+  .left-msg-panel button.add-btn {
+    align-self: flex-end;
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 1455px) {
+  .left-msg-panel {
+    padding: 0;
+  }
+
+  .left-msg-panel button.back-btn {
+    position: absolute;
+    align-self: flex-start;
+
+    left: 1rem;
+  }
+}

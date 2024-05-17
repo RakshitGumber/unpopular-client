@@ -1,0 +1,35 @@
+.follower-card .search-card .btn button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+  border-radius: 1rem;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.follower-card .search-card .btn button:hover {
+  background-color: var(--primary);
+}
+
+.follower-card .search-card .btn button:active {
+  background-color: var(--secondary);
+}
+
+.follower-card .search-card .btn button.red:hover {
+  background-color: var(--accent);
+}
+
+.follower-card .search-card .btn {
+  padding: 0;
+  gap: 0;
+  align-self: flex-end;
+}
+
+@media only screen and (max-width: 480px) {
+  .follower-card .search-card .btn button {
+    height: 1rem;
+    font-size: 0.5rem;
+  }
+}

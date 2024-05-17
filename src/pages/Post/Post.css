@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   height: 100vh;
+  padding-top: 60px;
 }
 
 .post-wrapper .post-main {
@@ -18,14 +19,69 @@
   position: relative;
 }
 
+.post-wrapper .post-cont::after {
+  position: absolute;
+  width: 98%;
+  height: 1px;
+  background-color: var(--border);
+  content: "";
+  display: block;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  bottom: 10px;
+}
+
 .post-wrapper .post-cont::before {
   position: absolute;
   width: 100%;
-  height: 100%;
-  background-color: black;
+  height: 5rem;
+  background-color: var(--secondary-background);
   content: "";
   display: block;
   left: 0;
-  top: -100%;
-  z-index: 1;
+  top: -5rem;
+}
+
+.post-search-input {
+  height: 60px;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  z-index: 9;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.post-search-input > input {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
+  border: none;
+  border-radius: 1rem;
+  color: var(--text);
+  padding: 0 1rem;
+  font-size: 1.2rem;
+}
+
+.post-search-input > button {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 1rem;
+  transition: all 100ms ease-in;
+  aspect-ratio: 1/1;
+}
+
+.post-search-input > button:active {
+  background-color: var(--primary);
+  filter: none;
+}
+
+.post-search-input > input::placeholder {
+  color: var(--secondary-text);
+}
+
+.post-search-input > input:focus {
+  outline: none;
 }

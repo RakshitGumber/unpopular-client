@@ -5,6 +5,8 @@
   display: flex;
   justify-content: space-between;
   flex-flow: column nowrap;
+  position: relative;
+  z-index: 3;
 }
 
 .feed-card-container .user-tag {
@@ -118,7 +120,7 @@
 }
 
 .feed-card-container .icon-button {
-  background-color: var(--primary);
+  background-color: var(--secondary-background);
   outline: none;
   width: 3rem;
   height: 3rem;
@@ -132,7 +134,8 @@
 }
 
 .feed-card-container .icon-button:hover {
-  background-color: var(--accent);
+  background-color: var(--background);
+  filter: none;
 }
 
 .feed-card-container .icon-button:active {
@@ -140,12 +143,12 @@
 }
 
 .feed-card-container .selected-button {
-  background-color: var(--secondary);
+  background-color: var(--primary);
 }
 
 .feed-card-container .post-actions .post-reactivity {
   display: flex;
-  background-color: var(--primary);
+  background-color: var(--secondary-background);
   border-radius: 1rem;
 }
 
@@ -164,7 +167,7 @@
 }
 
 .feed-card-container .post-reactivity span {
-  background-color: var(--primary);
+  background-color: var(--secondary-background);
   width: 3rem;
   height: 3rem;
   display: flex;

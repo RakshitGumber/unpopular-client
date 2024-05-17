@@ -9,6 +9,15 @@
   color: #fff;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.square {
+  aspect-ratio: 1/1;
+}
+.square .spbutton-content {
+  left: -0.5rem;
 }
 
 .spbutton:hover::before {
@@ -39,8 +48,16 @@
   border-radius: inherit;
   background: linear-gradient(
     82.3deg,
-    #cc00ff 10.8%,
+    var(--secondary) 10.8%,
     var(--primary) 94.3%
   );
   transition: all 0.475s;
+}
+
+.sp-red::before {
+  background: linear-gradient(
+    82.3deg,
+    var(--accent) 10.8%,
+    var(--secondary) 94.3%
+  );
 }

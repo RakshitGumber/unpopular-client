@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import "./Bottom.css";
 import {
   IoAddSharp,
@@ -10,12 +10,13 @@ import {
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import CreateFeed from "../../Feed/CreateFeed";
+import { FeedControlContext } from "../..";
 
 function Bottom() {
   const user = useSelector((state) => state.user.userInfo);
   const iconSize = useRef(30);
   const location = useLocation();
-  const [showCreate, setShowCreate] = useState(false);
+  const { showCreate, setShowCreate } = useContext(FeedControlContext);
 
   const data = [
     {

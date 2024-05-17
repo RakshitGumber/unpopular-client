@@ -25,7 +25,13 @@ const initialState = {
 export const followerSlice = createSlice({
   name: "follower",
   initialState,
-  reducers: {},
+  reducers: {
+    resetFollowerState: (state) => {
+      state.error = null;
+      state.success = null;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     // TODO: Get Friend List
     builder.addCase(getFollowerList.pending, (state) => {
@@ -36,22 +42,22 @@ export const followerSlice = createSlice({
     });
     builder.addCase(getFollowerList.fulfilled, (state, action) => {
       state.loading = false;
-      state.followers = action.payload;
+      state.followers = action.payload.data ?? [];
     });
     builder.addCase(getFollowerList.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = "getFollowerListError";
     });
     // TODO: Get Pending Request
     builder.addCase(getPendingRequest.pending, (state) => {
       state.loading = true;
-      state.outgoing = [];
+      state.incoming = [];
       state.error = null;
       state.success = null;
     });
     builder.addCase(getPendingRequest.fulfilled, (state, action) => {
       state.loading = false;
-      state.outgoing = action.payload;
+      state.incoming = action.payload.data ?? [];
     });
     builder.addCase(getPendingRequest.rejected, (state, action) => {
       state.loading = false;
@@ -66,7 +72,7 @@ export const followerSlice = createSlice({
     });
     builder.addCase(getFollowingList.fulfilled, (state, action) => {
       state.loading = false;
-      state.following = action.payload;
+      state.following = action.payload.data ?? [];
     });
     builder.addCase(getFollowingList.rejected, (state, action) => {
       state.loading = false;
@@ -95,10 +101,11 @@ export const followerSlice = createSlice({
     });
     builder.addCase(sendRequest.fulfilled, (state, action) => {
       state.loading = false;
-      state.success = action.payload;
+      state.success = "sendRequestSuccess";
+      state.outgoing.push(action.payload.requestedFrom);
     });
     builder.addCase(sendRequest.rejected, (state, action) => {
-      state.error = action.payload;
+      state.error = "sendRequestError";
       state.loading = false;
     });
     // TODO: Reject Request
@@ -109,11 +116,11 @@ export const followerSlice = createSlice({
     });
     builder.addCase(rejectRequest.fulfilled, (state, action) => {
       state.loading = false;
-      state.success = action.payload;
+      state.success = "requestRejectSuccess";
     });
     builder.addCase(rejectRequest.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = "requestRejectError";
     });
     // TODO: Accept Request
     builder.addCase(acceptRequest.pending, (state) => {
@@ -123,11 +130,11 @@ export const followerSlice = createSlice({
     });
     builder.addCase(acceptRequest.fulfilled, (state, action) => {
       state.loading = false;
-      state.success = action.payload;
+      state.success = "requestAcceptSuccess";
     });
     builder.addCase(acceptRequest.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = "requestAcceptError";
     });
     // TODO: Remove Follower
 
@@ -138,11 +145,11 @@ export const followerSlice = createSlice({
     });
     builder.addCase(removeFollower.fulfilled, (state, action) => {
       state.loading = false;
-      state.success = action.payload;
+      state.success = "followerRemoveSuccess";
     });
     builder.addCase(removeFollower.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = "followerRemoveError";
     });
     // TODO: Remove Following
     builder.addCase(removeFollowing.pending, (state) => {
@@ -152,13 +159,15 @@ export const followerSlice = createSlice({
     });
     builder.addCase(removeFollowing.fulfilled, (state, action) => {
       state.loading = false;
-      state.success = action.payload;
+      state.success = "followingRemoveSuccess";
     });
     builder.addCase(removeFollowing.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = "followingRemoveError";
     });
   },
 });
+
+export const { resetFollowerState } = followerSlice.actions;
 
 export default followerSlice.reducer;

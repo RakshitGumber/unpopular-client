@@ -89,7 +89,7 @@ export const removeFollower = createAsyncThunk(
   "people/removeFollower",
   async ({ id, userId }, { rejectWithValue }) => {
     try {
-      const { data } = await api.removeFollower(id, userId);
+      const data = await api.removeFollower(id, userId);
       return data;
     } catch (error) {
       return rejectWithValue(error);

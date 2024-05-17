@@ -1,0 +1,145 @@
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+  padding: 5rem 1rem;
+  border-radius: 0.5rem;
+  height: 100vh;
+}
+
+.login-wrapper > .login-container {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  width: 100%;
+  max-width: 48rem;
+  border: 3px solid var(--secondary-background);
+  border-radius: 1rem;
+  height: 100%;
+}
+
+.login-wrapper .login-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  height: 100%;
+}
+
+.login-wrapper h2 {
+  font-size: 2rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.login-wrapper p {
+  color: var(--secondary-text);
+}
+
+.login-wrapper .login-left > img {
+  max-width: 80%;
+  aspect-ratio: 1/1;
+  height: 100%;
+  align-self: center;
+  display: none;
+}
+
+.login-wrapper .login-right {
+  background-color: var(--secondary-background);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.login-wrapper .login-right .form-headers {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  max-width: 500px;
+  text-align: center;
+}
+
+.login-wrapper .login-right .login-form {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--secondary-text);
+  max-width: 500px;
+  width: 100%;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-wrapper .login-right .login-form > div {
+  width: max(80%, 300px);
+}
+
+.login-wrapper .login-right .login-form label {
+  display: block;
+  font-weight: 500;
+}
+
+.login-wrapper .login-right .login-form input {
+  margin: 0.5rem 0;
+  display: block;
+  border-radius: 0.4rem;
+  border: 1px solid var(--secondary-text);
+  background: none;
+  padding: 0.4rem 0.75rem;
+  color: var(--text);
+  width: 100%;
+  height: 2.4rem;
+}
+
+.login-wrapper .login-right .login-form input::placeholder {
+  color: var(--secondary-text);
+}
+
+.login-wrapper .login-right .login-form input:focus {
+  border: 1px solid var(--primary);
+}
+
+.login-wrapper .login-right .login-form button {
+  align-self: center;
+  margin-top: 2rem;
+}
+
+.login-wrapper .login-right .form-help {
+  display: block;
+  margin: 1rem;
+  font-size: 1rem;
+  color: var(--secondary-text);
+}
+
+.login-wrapper .login-right .form-help > a {
+  color: var(--primary);
+}
+
+.login-wrapper .login-right .bottom-right {
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+@media screen and (min-width: 1200px) {
+  .login-wrapper {
+    padding: 3.5rem;
+    padding-top: 7rem;
+  }
+
+  .login-wrapper > .login-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .login-wrapper .login-left > img {
+    display: block;
+  }
+  .login-wrapper > .login-container {
+    gap: 3rem;
+    max-width: none;
+  }
+}

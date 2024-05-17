@@ -3,18 +3,22 @@ import "./Feed.css";
 import FeedCard from "../FeedCard/FeedCard";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
-import { getPost } from "../../toolkit/actions/postActions";
+import { getPosts } from "../../toolkit/actions/postActions";
+import { useParams } from "react-router-dom";
+import { errorToast, successToast } from "../../util";
+import { resetPostState } from "../../toolkit/slices/postSlice";
 
-function Feed() {
+function Feed({ hideHeading }) {
   const [pageLoading, setPageLoading] = useState(true);
+  const { id } = useParams("id");
   const [pagePosts, setPagePosts] = useState([]);
   const dispatch = useDispatch();
 
-  const { loading, posts } = useSelector((state) => state.post);
+  const { loading, posts, success, error } = useSelector((state) => state.post);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      dispatch(getPost());
+      dispatch(getPosts());
     };
 
     fetchPosts();
@@ -30,20 +34,63 @@ function Feed() {
     }
   }, [loading, posts]);
 
+  useEffect(() => {
+    const showToastSuccess = () => {
+      if (success === null) return;
+
+      if (success === "postUpdateSuccess") {
+        successToast("Post Editted Successfully");
+      } else if (success === "postDeleteSuccess") {
+        successToast("Post Deleted Successfully");
+      }
+      dispatch(resetPostState());
+    };
+
+    const showToastError = () => {
+      if (error === null) return;
+
+      if (error === "postUpdateError") {
+        errorToast("Post couldn't be updated due to an error");
+      } else if (error === "postDeleteError") {
+        errorToast("Post couldn't be deleted due to an error");
+      }
+      dispatch(resetPostState());
+    };
+
+    showToastSuccess();
+    showToastError();
+    //
+  }, [success, dispatch, error]);
+
   if (pageLoading || pagePosts?.length === 0) return <Loader />;
 
   return (
     <div className="feed-wrapper">
-      <h2>Feed</h2>
+      {!hideHeading && <h2>Feed</h2>}
       <div className="feeds">
-        {pagePosts.toReversed().map((post, id) => (
-          <FeedCard data={post} key={id} />
-        ))}
+        {!id ? (
+          <>
+            {pagePosts.toReversed().map((post, id) => (
+              <FeedCard data={post} key={id} />
+            ))}
+          </>
+        ) : (
+          <>
+            {pagePosts
+              .filter(({ creator }) => creator._id === id)
+              .toReversed()
+              .map((post, id) => (
+                <FeedCard data={post} key={id} />
+              ))}
+          </>
+        )}
       </div>
-      <footer>
-        <h2>End Of Feeds</h2>
-        <h3>Post More have fun</h3>
-      </footer>
+      {!hideHeading && (
+        <footer>
+          <h2>End Of Feeds</h2>
+          <h3>Post More have fun</h3>
+        </footer>
+      )}
     </div>
   );
 }

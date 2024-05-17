@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ShowImage(props) {
+const ShowImage = React.forwardRef((props, ref) => {
   const [profilePicError, setProfilePicError] = useState(false);
 
   return (
@@ -12,6 +12,7 @@ function ShowImage(props) {
           }`}
           alt="userImage"
           {...props}
+          ref={ref}
         />
       ) : (
         <img
@@ -19,10 +20,11 @@ function ShowImage(props) {
           alt="ProfilePic"
           onError={() => setProfilePicError(true)}
           {...props}
+          ref={ref}
         />
       )}
     </>
   );
-}
+});
 
 export default ShowImage;
