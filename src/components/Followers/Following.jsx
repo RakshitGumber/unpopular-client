@@ -7,7 +7,7 @@ import {
   removeFollowing,
 } from "../../toolkit/actions/followerActions";
 import Loader from "../Loader/Loader";
-import { FaTrash, FaPhone, FaMessage } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 import { errorToast, successToast } from "../../util";
 import { resetFollowerState } from "../../toolkit/slices/followerSlice";
 
@@ -22,14 +22,6 @@ const Following = () => {
   const [removed, setRemoved] = useState("");
 
   const followingActions = [
-    {
-      name: <FaMessage size={24} />,
-      do: () => {},
-    },
-    {
-      name: <FaPhone size={24} />,
-      do: () => {},
-    },
     {
       name: <FaTrash size={24} />,
       do: (userId) => {

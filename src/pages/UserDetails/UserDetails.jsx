@@ -9,6 +9,7 @@ import {
   Navbar,
   BottomBar,
   EditProfile,
+  RightPanel,
 } from "../../components";
 import "./UserDetails.css";
 import { ShowImage } from "../../util";
@@ -55,13 +56,13 @@ const UserDetails = () => {
 
   let aboutData = [];
   if (userGet) {
-    if (userGet.location)
+    if (userGet.location?.isPublic)
       aboutData.push({
         id: 0,
         icon: <FaLocationDot />,
         text: userGet.location,
       });
-    if (userGet.dateOfBirth)
+    if (userGet.dateOfBirth?.isPublic)
       aboutData.push({
         id: 1,
         icon: <FaRegCalendar />,
@@ -177,7 +178,7 @@ const UserDetails = () => {
         )}
       </div>
       {editing && <EditProfile setEditing={setEditing} />}
-      {/* <RightPanel />   */}
+      <RightPanel />
       <BottomBar />
     </div>
   );

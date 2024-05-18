@@ -81,6 +81,11 @@ export const userSlice = createSlice({
     builder.addCase(updateUser.fulfilled, (state, action) => {
       state.loading = false;
       state.userInfo = action.payload;
+      state.userGet =
+        state.userGet._id === state.userInfo._id
+          ? action.payload
+          : state.userGet;
+      state.success = true;
     });
     builder.addCase(updateUser.rejected, (state, action) => {
       state.loading = false;

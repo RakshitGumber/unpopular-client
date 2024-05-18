@@ -8,7 +8,7 @@
 
 .not-found-page-container h1 {
   font-size: 5rem;
-  text-shadow: 5px 5px rebeccapurple, -5px -5px mediumvioletred;
+  text-shadow: 5px 5px var(--primary), -5px -5px var(--accent);
 }
 
 .not-found-page-container a {

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { io } from "socket.io-client";
+import React, { useEffect } from "react";
 import { Feed, Followers, Following, Pending } from "./components";
 import {
   Landing,
@@ -9,8 +8,7 @@ import {
   UserDetails,
   People,
   PostView,
-  MessagePage,
-  Room,
+  Settings,
 } from "./pages";
 import NotFound from "./pages/NotFound";
 import { ProtectedRoute } from "./util";
@@ -20,12 +18,7 @@ import { useSelector } from "react-redux";
 
 const App = () => {
   const { userToken } = useSelector((state) => state.user);
-  const [socket, setSocket] = useState(null);
   const { theme } = useSelector((state) => state.settings);
-
-  useEffect(() => {
-    setSocket(io(`http://localhost:8080`));
-  }, []);
 
   useEffect(() => {
     if (theme === "light-theme") document.body.classList.remove("dark-theme");
@@ -69,6 +62,10 @@ const App = () => {
       element: <ProtectedRoute token={userToken} />,
       children: [
         {
+          path: "user/:id/settings",
+          element: <Settings />,
+        },
+        {
           path: "home",
           element: <Home />,
         },
@@ -83,16 +80,6 @@ const App = () => {
                 { path: "following", element: <Following /> },
                 { path: "pending", element: <Pending /> },
               ],
-            },
-          ],
-        },
-        {
-          path: "chat",
-          element: <MessagePage socket={socket} />,
-          children: [
-            {
-              path: ":roomId",
-              element: <Room socket={socket} />,
             },
           ],
         },

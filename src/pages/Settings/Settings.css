@@ -1,0 +1,104 @@
+.setting-conatiner {
+  width: 80%;
+  margin: 70px auto;
+  background-color: var(--secondary-background);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+}
+
+.setting-conatiner > *:not(:first-child, button) {
+  border-top: 3px solid var(--border);
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.setting-conatiner :first-child {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.setting-conatiner :first-child button {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  border: 2px solid var(--border);
+}
+
+.setting-conatiner .profile-settings {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.setting-conatiner .profile-settings div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.setting-conatiner h2 {
+  padding-bottom: 0.5rem;
+}
+
+.setting-conatiner .profile-settings div > input {
+  height: 1.2rem;
+  width: 1.2rem;
+  accent-color: var(--primary);
+}
+
+.setting-conatiner .profile-settings .btn {
+  width: 50%;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+}
+
+.setting-conatiner .profile-settings > .row {
+  margin: 1rem 0 0 0;
+  display: flex;
+  gap: 1rem;
+  width: 400px;
+}
+
+.setting-conatiner .theme-settings select {
+  height: 3rem;
+  width: 10rem;
+  border: none;
+  background-color: var(--background);
+  border-radius: 1rem 1rem;
+  padding: 1rem;
+  color: var(--text);
+  z-index: 1;
+  position: relative;
+}
+
+.setting-conatiner .theme-settings select:focus {
+  outline: none;
+}
+
+.setting-conatiner .theme-settings {
+  position: relative;
+}
+
+.setting-conatiner .theme-settings::after {
+  content: "";
+  width: 2rem;
+  height: 3rem;
+  display: block;
+  background-color: var(--background);
+  position: absolute;
+  top: 3rem;
+  left: 10rem;
+  border-radius: 0 1rem 1rem 0;
+}

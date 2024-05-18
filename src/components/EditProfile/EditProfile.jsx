@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { updateUser } from "../../toolkit/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import FileBase from "react-file-base64";
 import "./EditProfile.css";
-import { ShowImage } from "../../util";
+import { errorToast, ShowImage, successToast } from "../../util";
 import { IoClose } from "react-icons/io5";
+import { resetUser } from "../../toolkit/slices/userSlice";
 
 const initialState = {
   firstName: "",
@@ -15,19 +16,37 @@ const initialState = {
   username: "",
   email: "",
   password: "",
+  location: "",
+  bio: "",
 };
 
 const EditProfile = ({ setEditing }) => {
   const [formData, setFormData] = useState(initialState);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.user);
+  const { userInfo, success, error } = useSelector((state) => state.user);
+  const { theme } = useSelector((state) => state.settings);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUser(id, formData));
+    dispatch(updateUser({ id, formData }));
     setEditing(false);
   };
+
+  const toastConfig = {
+    theme: theme === "light-theme" ? "light" : "dark",
+  };
+
+  useEffect(() => {
+    if (success) {
+      successToast("User updated successfully", toastConfig);
+      dispatch(resetUser());
+    }
+    if (error) {
+      errorToast("Sorry an unexpected error occurred", toastConfig);
+      dispatch(resetUser());
+    }
+  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,7 +63,10 @@ const EditProfile = ({ setEditing }) => {
                 lastname={userInfo.lastName}
               />
               <button
-                onClick={() => setFormData({ ...formData, profilepic: null })}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFormData({ ...formData, profilepic: null });
+                }}
                 className="icn-btn"
               >
                 <IoClose size={24} />
@@ -114,7 +136,8 @@ const EditProfile = ({ setEditing }) => {
             Save Changes
           </button>
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               setEditing(false);
             }}
             className="btn"
