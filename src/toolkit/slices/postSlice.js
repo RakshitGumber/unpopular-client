@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createPost,
   getPosts,
-  getPost,
   likePost,
   dislikePost,
   searchPost,
   updatePost,
   deletePost,
+  commentPost,
 } from "../actions/postActions";
 
 const initialState = {
@@ -75,7 +75,7 @@ export const postSlice = createSlice({
     });
     builder.addCase(getPosts.fulfilled, (state, action) => {
       state.loading = false;
-      state.posts = action.payload;
+      state.posts = action.payload ?? [];
       state.success = "postFetchSuccess";
     });
     builder.addCase(getPosts.rejected, (state, action) => {
@@ -83,20 +83,24 @@ export const postSlice = createSlice({
       state.error = action.payload;
     });
 
-    // * Get Post Cases
-    builder.addCase(getPost.pending, (state) => {
+    // * Comment on Post
+    builder.addCase(commentPost.pending, (state) => {
       state.loading = true;
       state.error = null;
-      state.posts = [];
+      state.success = null;
     });
-    builder.addCase(getPost.fulfilled, (state, action) => {
+    builder.addCase(commentPost.fulfilled, (state, action) => {
       state.loading = false;
-      state.posts = action.payload;
-      state.success = "onePostFetchSuccess";
+      state.posts.forEach((post) => {
+        if (post._id === action.payload._id) {
+          post = action.payload;
+        }
+      });
+      state.success = "commentPostSuccess";
     });
-    builder.addCase(getPost.rejected, (state, action) => {
+    builder.addCase(commentPost.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = "commentPostError";
     });
 
     // * Like Post Cases
@@ -152,7 +156,7 @@ export const postSlice = createSlice({
       state.error = "postDeleteError";
     });
 
-    // TODO: Get Search User
+    // * Get Search User
     builder.addCase(searchPost.pending, (state) => {
       state.loading = true;
       state.searchResults = [];

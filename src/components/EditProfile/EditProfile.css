@@ -1,0 +1,128 @@
+.update-form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 430px;
+  height: auto;
+  background-color: var(--secondary-background);
+  z-index: 50;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+  padding: 1rem;
+  border: 1px solid var(--border);
+}
+
+.update-form-container .update-form .row {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  width: 100%;
+}
+
+.update-form-container .update-form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+.update-form img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.update-form .img-container {
+  width: 10rem;
+  height: 10rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.update-form .img-container::before {
+  content: "";
+  width: 11rem;
+  height: 11rem;
+  display: block;
+  z-index: 1;
+  background: radial-gradient(
+    circle,
+    transparent 65%,
+    var(--secondary-background) 65%
+  );
+  top: -0.5rem;
+  left: -0.5rem;
+  position: absolute;
+  opacity: 0.7;
+  filter: blur(1px);
+}
+
+.update-form .img-container .icn-btn {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  color: var(--text);
+  z-index: 3;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 100ms ease-in;
+}
+
+.update-form .img-container:hover .icn-btn {
+  opacity: 1;
+}
+
+.update-form-container .update-form .left,
+.update-form-container .update-form .right {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-shrink: 0;
+}
+
+.update-form-container .update-form .left {
+  align-items: center;
+}
+
+.update-form-container .update-form .right {
+  flex-grow: 1;
+}
+
+.update-form-container > h2 {
+  color: var(--text);
+  padding: 1rem;
+}
+
+.update-form-container .update-form input {
+  height: 3rem;
+  background-color: var(--background);
+  color: var(--text);
+  font-size: 1rem;
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin: 0.3rem 0;
+  display: block;
+  width: 100%;
+}
+
+.update-form-container .update-form input::placeholder {
+  color: var(--secondary-text);
+}
+
+.update-form-container .update-form .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 100%;
+}
+
+.update-form-container .update-form .btn:first-of-type:hover {
+  background-color: var(--primary);
+}

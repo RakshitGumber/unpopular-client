@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "../../toolkit/actions/userActions";
+import { getUser } from "../../toolkit/actions/userActions";
 import { sendRequest } from "../../toolkit/actions/followerActions";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import {
   Loader,
   Sidebar,
-  RightPanel,
   Navbar,
   BottomBar,
+  EditProfile,
 } from "../../components";
 import "./UserDetails.css";
 import { ShowImage } from "../../util";
@@ -20,16 +20,6 @@ import {
 } from "react-icons/fa6";
 import moment from "moment";
 
-const initialState = {
-  firstName: "",
-  lastName: "",
-  dateOfBirth: "",
-  profilepic: "",
-  username: "",
-  email: "",
-  password: "",
-};
-
 const UserDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -37,7 +27,6 @@ const UserDetails = () => {
   const { following, pending } = useSelector((state) => state.people);
   const [editable, setEditable] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState(initialState);
   const [isFollowing] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
@@ -62,16 +51,6 @@ const UserDetails = () => {
   const sendFollowRequest = () => {
     dispatch(sendRequest({ id: userInfo._id, userId: id }));
     setIsPending(true);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await dispatch(updateUser(id, formData));
-    setEditing(false);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   let aboutData = [];
@@ -99,7 +78,7 @@ const UserDetails = () => {
 
   return (
     <div className="user-details-wrapper">
-      <Navbar />
+      <Navbar hidden />
       <Sidebar />
       <div className="main">
         {loading || !userGet ? (
@@ -143,28 +122,6 @@ const UserDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* Editing function displys form */}
-            {editing && (
-              <>
-                <input
-                  type="text"
-                  name="firstName"
-                  onChange={handleChange}
-                  placeholder={userGet.firstName}
-                />
-                <button type="submit" onClick={handleSubmit}>
-                  Save Changes
-                </button>
-                <button
-                  onClick={() => {
-                    setEditing(false);
-                  }}
-                >
-                  Cancel
-                </button>
-              </>
-            )}
             {/* <button onClick={logout}>Log Out</button> */}
             <div className="content">
               <div className="prof-about">
@@ -219,7 +176,8 @@ const UserDetails = () => {
           </>
         )}
       </div>
-      <RightPanel />
+      {editing && <EditProfile setEditing={setEditing} />}
+      {/* <RightPanel />   */}
       <BottomBar />
     </div>
   );

@@ -25,18 +25,6 @@ export const getPosts = createAsyncThunk(
   }
 );
 
-export const getPost = createAsyncThunk(
-  "posts/getPost",
-  async ({ id }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.getPosts(id);
-      return data;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  }
-);
-
 export const searchPost = createAsyncThunk(
   "posts/search",
   async ({ query }, { rejectWithValue }) => {
@@ -90,6 +78,18 @@ export const updatePost = createAsyncThunk(
   async ({ id, post }, { rejectWithValue }) => {
     try {
       const { data } = await api.updatePost(id, post);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const commentPost = createAsyncThunk(
+  "post/comment",
+  async ({ id, message, userId }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.commentPost(id, message, userId);
       return data;
     } catch (error) {
       return rejectWithValue(error);

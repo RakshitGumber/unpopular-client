@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   IoPeopleOutline,
   IoPersonCircleOutline,
-  IoChatboxOutline,
   IoCompassOutline,
   IoAddSharp,
   IoSettingsSharp,
@@ -45,12 +44,7 @@ function Sidebar() {
       morePaths: ["/posts/"],
       icon: <IoCompassOutline size={iconSize.current} />,
     },
-    {
-      id: 1,
-      name: "Messages",
-      path: `/chat`,
-      icon: <IoChatboxOutline size={iconSize.current} />,
-    },
+
     {
       id: 3,
       name: "People",
@@ -90,7 +84,7 @@ function Sidebar() {
             <div
               className="user-info"
               onClick={() =>
-                actions.setShowUserActions(!actions.showUserActions)
+                actions?.setShowUserActions(!actions.showUserActions)
               }
             >
               <p className="strong">

@@ -6,6 +6,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import postsReducer from "./slices/postSlice";
 import followerReducer from "./slices/followerSlice";
 import messageReducer from "./slices/messageSlice";
+import settingsReducer from "./slices/settingsSlice";
 
 const peoplePersistConfig = {
   key: "people",
@@ -13,23 +14,27 @@ const peoplePersistConfig = {
   whitelist: ["outgoing"],
 };
 
+const settingsPersistConfig = {
+  key: "settings",
+  storage: storage,
+};
+
+const userPersistConfig = {
+  key: "user",
+  storage: storage,
+  whitelist: ["userInfo", "userToken"],
+};
+
 const reducers = combineReducers({
-  user: userReducer,
+  user: persistReducer(userPersistConfig, userReducer),
   post: postsReducer,
+  settings: persistReducer(settingsPersistConfig, settingsReducer),
   people: persistReducer(peoplePersistConfig, followerReducer),
   message: messageReducer,
 });
 
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["user"],
-};
-
-const persistedReducer = persistReducer(persistConfig, reducers);
-
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

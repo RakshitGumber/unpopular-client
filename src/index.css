@@ -10,14 +10,27 @@
 }
 
 :root {
+  --primary: #7b00ff;
+  --secondary: #bf00ff;
+  --accent: #e90c59;
+}
+
+.dark-theme {
   --background: #16161d;
   --secondary-background: #1f1f29;
   --secondary-text: #9696bf;
   --text: white;
-  --primary: #7b00ff;
-  --secondary: #bf00ff;
-  --accent: #e90c59;
   --border: #2d2d2d;
+  width: 100%;
+  height: 100%;
+}
+
+.light-theme {
+  --background: white;
+  --secondary-background: #e1e1ee;
+  --secondary-text: #31313c;
+  --text: #16161d;
+  --border: #d0d0e0;
 }
 
 body {

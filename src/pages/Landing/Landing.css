@@ -99,6 +99,7 @@
   gap: 5vw;
   align-items: center;
   height: 100vh;
+  background-color: var(--background);
 }
 
 .sticky-nav-bg {
@@ -123,6 +124,7 @@
   text-transform: uppercase;
   width: 100%;
   text-align: center;
+  color: var(--text);
 }
 
 .heading-text:after {
@@ -164,6 +166,7 @@
   padding: 50px 50px 50px 100px;
   height: 50vh;
   justify-content: space-between;
+  background-color: var(--background);
 }
 
 .avatar {
@@ -221,6 +224,7 @@
   justify-content: space-around;
   gap: 50px;
   padding: 50px;
+  background-color: var(--background);
 }
 
 .contact .heading-text {
@@ -284,9 +288,10 @@
   height: 100%;
   width: 100%;
   transition: all 200ms ease-in;
+  color: var(--text);
 }
 
-.contact-left > .connections > .card:hover {
+.contact-left > .connections .card:hover > .card-icon {
   color: var(--primary);
 }
 

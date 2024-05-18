@@ -29,20 +29,18 @@ function RightPanel() {
   };
 
   useEffect(() => {
-    setResults([]);
-  }, []);
-
-  useEffect(() => {
-    if (posts.length === 0) {
+    const fetchPosts = async () => {
       dispatch(getPosts());
-    }
-  }, [dispatch, posts]);
+    };
+
+    fetchPosts();
+  }, [dispatch]);
 
   useEffect(() => {
-    if (loading) {
+    if (loading && posts.length === 0) {
       setPageLoading(true);
     }
-    if (posts) {
+    if (posts.length !== 0) {
       setPageLoading(false);
       setPagePosts(posts);
     }

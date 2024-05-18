@@ -82,7 +82,7 @@ const People = () => {
 
   return (
     <div className="friends-wrapper">
-      <Navbar />
+      <Navbar hidden />
       <Sidebar />
       <div className="friends-main">
         <h1>Explore</h1>

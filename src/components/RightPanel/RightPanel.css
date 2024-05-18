@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .panel-wrapper * {
@@ -33,14 +33,14 @@
   height: 3rem;
   padding: 0.6rem 1.2rem;
   background-color: var(--secondary-background);
-  color: white;
+  color: var(--text);
   font-size: 1rem;
   border: none;
   border-radius: 1rem 0px 0px 1rem;
 }
 
 .search-input::placeholder {
-  color: gray;
+  color: var(--secondary-text);
   font-size: 1rem;
 }
 
@@ -84,7 +84,7 @@
 }
 
 .trending-card h2:hover {
-  color: white;
+  color: var(--secondary-text);
 }
 
 .trending-card h2::before {
@@ -98,12 +98,16 @@
 .post-results {
   width: 100%;
   background-color: var(--secondary-background);
-  padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 1rem;
+  padding: 0 1rem;
 }
 
-.searched-post {
-  border-top: 1px solid var(--border);
-  padding: 10px 0px 0px;
+.post-results .searched-post {
+  margin: 0;
+  padding: 1rem 0;
   color: var(--secondary-text);
+}
+
+.post-results .searched-post:not(:last-child) {
+  border-bottom: 1px solid var(--border);
 }

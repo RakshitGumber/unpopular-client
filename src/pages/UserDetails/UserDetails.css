@@ -60,7 +60,7 @@
 .prof-header > .pic > .status {
   width: 1.2rem;
   height: 1.2rem;
-  background-color: greenyellow;
+  background-color: var(--primary);
   position: absolute;
   bottom: 2rem;
   left: 9rem;

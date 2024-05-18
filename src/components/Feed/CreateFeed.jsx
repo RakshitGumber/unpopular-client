@@ -118,7 +118,6 @@ const CreateFeed = ({ setShowCreate }) => {
             }}
           />
           <section className="images">
-            {console.log(formData.images)}
             {formData.images.length !== 0 &&
               formData.images.map((image, id) => (
                 <div key={id}>

@@ -1,12 +1,13 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const successToast = (msg, options) =>
-  toast.success(msg, {
+export const successToast = (msg, options) => {
+  return toast.success(msg, {
     theme: options?.theme ?? "dark",
     position: "bottom-right",
     autoClose: 2000,
   });
+};
 
 export const errorToast = (err, options) =>
   toast.error(err, {

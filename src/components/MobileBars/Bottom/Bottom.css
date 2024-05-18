@@ -20,25 +20,24 @@
   color: var(--text);
   padding: 0;
   border: none;
+  position: relative;
+  bottom: 0;
+  transition: all 200ms ease-in;
 }
 
-.bottom-bar button.btn {
+.bottom-bar .selected-btn {
   position: relative;
   bottom: 1rem;
-  /* border-radius: 50%; */
   background-color: var(--primary);
+  transition: all 200ms ease-in;
 }
 
-.bottom-bar button.btn:hover {
+.bottom-bar .btn:hover {
   background-color: var(--accent);
 }
 
-.bottom-bar button.btn:active {
+.bottom-bar .btn:active {
   filter: brightness(0.3);
-}
-
-.bottom-bar .selected {
-  background-color: var(--primary);
 }
 @media only screen and (min-width: 768px) {
   .bottom-bar {

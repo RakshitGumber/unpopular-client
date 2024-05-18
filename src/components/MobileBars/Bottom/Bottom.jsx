@@ -2,7 +2,6 @@ import React, { useContext, useRef } from "react";
 import "./Bottom.css";
 import {
   IoAddSharp,
-  IoChatboxOutline,
   IoCompassOutline,
   IoPeopleOutline,
   IoPersonCircleOutline,
@@ -24,12 +23,6 @@ function Bottom() {
       name: "Feed",
       path: "/home",
       icon: <IoCompassOutline size={iconSize.current} />,
-    },
-    {
-      id: 1,
-      name: "Messages",
-      path: `/chat`,
-      icon: <IoChatboxOutline size={iconSize.current} />,
     },
     {
       id: 2,
@@ -57,9 +50,9 @@ function Bottom() {
     <div className="bottom-bar">
       {data.map((item, index) => (
         <React.Fragment key={index}>
-          {index === data.length / 2 && (
+          {index === 0 && (
             <button
-              className="btn"
+              className={`btn ${showCreate ? "selected-btn" : ""}`}
               onClick={() => {
                 setShowCreate(true);
               }}
@@ -67,17 +60,16 @@ function Bottom() {
               <IoAddSharp size={iconSize.current} />
             </button>
           )}
-          <Link to={item.path}>
-            <div
-              className={`btn ${
-                location.pathname === item.path ||
-                item.morePaths?.includes(location.pathname)
-                  ? "selected"
-                  : ""
-              }`}
-            >
-              {item.icon}
-            </div>
+          <Link
+            to={item.path}
+            className={`btn ${
+              location.pathname === item.path ||
+              item?.morePaths?.includes(location.pathname)
+                ? "selected-btn"
+                : ""
+            }`}
+          >
+            {item.icon}
           </Link>
         </React.Fragment>
       ))}

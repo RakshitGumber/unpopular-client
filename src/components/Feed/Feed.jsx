@@ -13,7 +13,6 @@ function Feed({ hideHeading }) {
   const { id } = useParams("id");
   const [pagePosts, setPagePosts] = useState([]);
   const dispatch = useDispatch();
-
   const { loading, posts, success, error } = useSelector((state) => state.post);
 
   useEffect(() => {
@@ -25,12 +24,12 @@ function Feed({ hideHeading }) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (loading) {
+    if (loading && posts.length === 0) {
       setPageLoading(true);
     }
-    if (posts) {
-      setPageLoading(false);
+    if (!loading && posts.length !== 0) {
       setPagePosts(posts);
+      setPageLoading(false);
     }
   }, [loading, posts]);
 
@@ -62,7 +61,7 @@ function Feed({ hideHeading }) {
     //
   }, [success, dispatch, error]);
 
-  if (pageLoading || pagePosts?.length === 0) return <Loader />;
+  if (pageLoading) return <Loader />;
 
   return (
     <div className="feed-wrapper">

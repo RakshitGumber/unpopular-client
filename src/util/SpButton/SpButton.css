@@ -4,9 +4,9 @@
   height: 3rem;
   padding: 0 2rem;
   border-radius: 1.5rem;
-  background: #3d3a4e;
+  background: var(--background);
   background-size: 400%;
-  color: #fff;
+  color: var(--text);
   border: none;
   cursor: pointer;
   display: flex;

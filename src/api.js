@@ -48,8 +48,6 @@ export const removeFollowing = (id, userId) =>
 
 export const getPosts = () => API.get("/posts");
 
-export const getPost = (id) => API.get(`/posts/${id}`);
-
 export const createPost = (data) => API.post("/posts", data);
 
 export const updatePost = (id, data) => API.patch(`/posts/${id}`, data);
@@ -67,3 +65,6 @@ export const searchPosts = (query) =>
   API.get(`/posts/search?searchQuery=${query}`);
 
 export const deletePost = (id) => API.delete(`/posts/${id}`);
+
+export const commentPost = (id, message, userId) =>
+  API.post(`/posts/${id}/comment`, { message, userId });

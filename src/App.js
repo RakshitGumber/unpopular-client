@@ -21,10 +21,17 @@ import { useSelector } from "react-redux";
 const App = () => {
   const { userToken } = useSelector((state) => state.user);
   const [socket, setSocket] = useState(null);
+  const { theme } = useSelector((state) => state.settings);
 
   useEffect(() => {
     setSocket(io(`http://localhost:8080`));
   }, []);
+
+  useEffect(() => {
+    if (theme === "light-theme") document.body.classList.remove("dark-theme");
+    else document.body.classList.remove("light-theme");
+    document.body.classList.add(theme);
+  }, [theme]);
 
   const router = createBrowserRouter([
     {

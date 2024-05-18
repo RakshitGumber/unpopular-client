@@ -13,6 +13,7 @@ export { default as TopBar } from "./MobileBars/Top/Top";
 export { default as BottomBar } from "./MobileBars/Bottom/Bottom";
 export { default as FeedCard } from "./FeedCard/FeedCard";
 export { MessagingMain, MessagingLeft, MessagingRight } from "./Messaging";
+export { default as EditProfile } from "./EditProfile/EditProfile";
 
 const FeedControlContext = createContext(null);
 const UserActionsControlContext = createContext(null);

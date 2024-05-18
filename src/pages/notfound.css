@@ -1,0 +1,16 @@
+.not-found-page-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.not-found-page-container h1 {
+  font-size: 5rem;
+  text-shadow: 5px 5px rebeccapurple, -5px -5px mediumvioletred;
+}
+
+.not-found-page-container a {
+  font-size: 3rem;
+}
