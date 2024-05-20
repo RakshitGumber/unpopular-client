@@ -90,6 +90,7 @@ const CreateFeed = ({ setShowCreate }) => {
             placeholder="Title"
             value={formData.title}
             onChange={handleChange}
+            required
           />
           <label htmlFor="message">Message</label>
           <textarea
@@ -100,6 +101,7 @@ const CreateFeed = ({ setShowCreate }) => {
             value={formData.message}
             onChange={handleChange}
             aria-multiline
+            required
           />
           <label htmlFor="images">Add or Remove Images</label>
           <Widget
