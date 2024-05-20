@@ -28,14 +28,14 @@ function FeedCard({ data }) {
   const [isFollowing] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const dataState = useRef({
-    liked: data.likes.includes(user._id),
-    disliked: data.dislikes.includes(user._id),
+    liked: data.likes?.includes(user._id) ?? false,
+    disliked: data.dislikes?.includes(user._id) ?? false,
     pending: false,
     following: false,
   });
   const [postState, setPostState] = useState({
-    likes: data.likes.length,
-    dislikes: data.dislikes.length,
+    likes: data.likes?.length ?? 0,
+    dislikes: data.dislikes?.length ?? 0,
   });
 
   const overflowingText = useRef(null);
@@ -126,18 +126,11 @@ function FeedCard({ data }) {
     <div className="feed-card-container">
       <div className="row">
         <div className="user-tag">
-          {creator.lastName ? (
-            <ShowImage
-              image={creator.profilepic}
-              firstname={creator.firstName}
-              lastname={creator.lastName}
-            />
-          ) : (
-            <ShowImage
-              image={creator.profilepic}
-              firstname={creator.firstName}
-            />
-          )}
+          <ShowImage
+            image={creator?.profilepic}
+            firstname={creator?.firstName}
+            lastname={creator?.lastName}
+          />
 
           <div
             className="userinfo"
@@ -146,9 +139,9 @@ function FeedCard({ data }) {
             }}
           >
             <p className="strong">
-              {creator.lastName
-                ? creator.firstName + " " + creator.lastName
-                : creator.firstName}
+              {creator?.lastName
+                ? creator?.firstName + " " + creator?.lastName
+                : creator?.firstName}
             </p>
             <p className="weak">@{creator.username}</p>
             <p className="weak">{moment(data.createdAt).fromNow()}</p>

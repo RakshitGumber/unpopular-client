@@ -4,7 +4,7 @@ import { searchPost, getPosts } from "../../toolkit/actions/postActions";
 import { IoSearch } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../Loader/Loader";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { debounce } from "lodash";
 
 function RightPanel() {
@@ -28,13 +28,17 @@ function RightPanel() {
     debouncedSearch(inputValue);
   };
 
+  const { pathname } = useLocation();
+
   useEffect(() => {
     const fetchPosts = async () => {
       dispatch(getPosts());
     };
 
-    fetchPosts();
-  }, [dispatch]);
+    if (pathname !== "/home") {
+      fetchPosts();
+    }
+  }, [dispatch, pathname]);
 
   useEffect(() => {
     if (loading && posts.length === 0) {

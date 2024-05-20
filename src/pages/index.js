@@ -5,6 +5,4 @@ export { default as People } from "./People/People.jsx";
 export { default as UserDetails } from "./UserDetails/UserDetails.jsx";
 export { default as Landing } from "./Landing/Landing.jsx";
 export { default as PostView } from "./Post/Post.jsx";
-export { default as MessagePage } from "./Message/Message.jsx";
-export { default as Room } from "./Message/Room.jsx";
 export { default as Settings } from "./Settings/Settings.jsx";

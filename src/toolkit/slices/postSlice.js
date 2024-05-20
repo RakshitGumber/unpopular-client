@@ -17,6 +17,7 @@ const initialState = {
   error: null,
   success: null,
   searchResults: [],
+  imageUrls: [],
 };
 
 export const postSlice = createSlice({
@@ -40,7 +41,7 @@ export const postSlice = createSlice({
     });
     builder.addCase(createPost.fulfilled, (state, action) => {
       state.loading = false;
-      state.posts = [...state.posts, action.payload];
+      // state.posts = [...state.posts, action.payload];
       state.success = "postCreateSuccess";
     });
     builder.addCase(createPost.rejected, (state, action) => {

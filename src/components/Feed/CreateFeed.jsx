@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../toolkit/actions/postActions";
 import { saveDraft } from "../../toolkit/slices/postSlice";
@@ -7,6 +6,7 @@ import { IoClose } from "react-icons/io5";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import "./CreateFeed.css";
 import { FeedControlContext } from "..";
+import { Widget } from "@uploadcare/react-widget";
 
 const initialState = {
   title: "",
@@ -22,6 +22,7 @@ const CreateFeed = ({ setShowCreate }) => {
   const creator = useSelector((state) => state.user.userInfo._id);
   const { draft } = useSelector((state) => state.post) || initialState;
   const { editing, postValue } = useContext(FeedControlContext);
+  const [disabled, setDisabled] = useState(false);
 
   const closeWidget = () => {
     setShowCreate(false);
@@ -55,11 +56,6 @@ const CreateFeed = ({ setShowCreate }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const removeImage = (image) => {
-    let newImages = formData.images.filter((item) => item !== image);
-    setFormData({ ...formData, images: newImages });
-  };
-
   useEffect(() => {
     if (editing) {
       setFormData(postValue);
@@ -84,6 +80,7 @@ const CreateFeed = ({ setShowCreate }) => {
           action="create-post-form"
           onSubmit={handleSubmit}
           className="create-post-form"
+          encType="multipart/form-data"
         >
           <label htmlFor="title">Title</label>
           <input
@@ -104,18 +101,28 @@ const CreateFeed = ({ setShowCreate }) => {
             onChange={handleChange}
             aria-multiline
           />
-          <FileBase
-            type="file"
-            multiple
-            value={formData.images}
-            onDone={(image) => {
-              image.forEach(({ base64 }) => {
-                setFormData({
-                  ...formData,
-                  images: [...formData.images, base64],
-                });
-              });
+          <label htmlFor="images">Add or Remove Images</label>
+          <Widget
+            publicKey="a56cee8a34ef7370cbc4"
+            onFileSelect={(file) => {
+              setDisabled(true);
             }}
+            onChange={(info) => {
+              console.log(info);
+              setFormData({ ...formData, images: [] });
+              const imageArray = [];
+              for (let i = 0; i < info.count; i++) {
+                imageArray.push(`${info.cdnUrl}nth/${i}/`);
+              }
+              setFormData({
+                ...formData,
+                images: imageArray,
+              });
+              setDisabled(false);
+            }}
+            multiple
+            multipleMax={4}
+            id="images"
           />
           <section className="images">
             {formData.images.length !== 0 &&
@@ -127,17 +134,13 @@ const CreateFeed = ({ setShowCreate }) => {
                     alt="post selected by you"
                     width="200px"
                   />
-                  <button
-                    className="img-btn"
-                    onClick={() => removeImage(image)}
-                  >
-                    <IoClose size={20} />
-                  </button>
                 </div>
               ))}
           </section>
           <section className="btn-wrapper">
-            <button type="submit">Send</button>
+            <button type="submit" disabled={disabled}>
+              Send
+            </button>
             {!editing && <button onClick={saveDraftFunc}>Save as Draft</button>}
           </section>
         </form>

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:8080" });
+const API = axios.create({
+  baseURL: "https://unpopular-server-d3eb5c5b11fc.herokuapp.com/",
+});
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("user")) {
@@ -68,3 +70,6 @@ export const deletePost = (id) => API.delete(`/posts/${id}`);
 
 export const commentPost = (id, message, userId) =>
   API.post(`/posts/${id}/comment`, { message, userId });
+
+export const uploadImages = (imageData) =>
+  API.post("/posts/uploadfiles", imageData);
