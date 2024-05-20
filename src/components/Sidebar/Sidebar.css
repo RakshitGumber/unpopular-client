@@ -93,6 +93,7 @@
 
 .user > .user-info:hover {
   background-color: var(--secondary-background);
+  cursor: pointer;
 }
 .user p {
   position: relative;
@@ -103,7 +104,7 @@
 }
 .user-actions {
   position: absolute;
-  z-index: 10;
+  z-index: 30;
   top: 14rem;
   background-color: var(--background);
   padding: 1rem 0;
@@ -125,10 +126,14 @@
   padding: 1rem;
   font-size: 1.2rem;
   border: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .user-actions > .action:hover {
   background-color: var(--secondary-background);
+  filter: none;
 }
 
 .user-actions > .action:active {

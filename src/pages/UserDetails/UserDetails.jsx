@@ -25,7 +25,6 @@ const UserDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { userGet, loading, userInfo } = useSelector((state) => state.user);
-  const { following, pending } = useSelector((state) => state.people);
   const [editable, setEditable] = useState(false);
   const [editing, setEditing] = useState(false);
   const [isFollowing] = useState(false);
@@ -44,10 +43,9 @@ const UserDetails = () => {
       } else {
         if (loading) return;
         setEditable(false);
-        console.log(following, pending);
       }
     }
-  }, [userGet, userInfo, following, loading, pending]);
+  }, [userGet, userInfo, loading]);
 
   const sendFollowRequest = () => {
     dispatch(sendRequest({ id: userInfo._id, userId: id }));
@@ -56,17 +54,17 @@ const UserDetails = () => {
 
   let aboutData = [];
   if (userGet) {
-    if (userGet.location?.isPublic)
+    if (userGet.location?.isPublic && userGet.location.value)
       aboutData.push({
         id: 0,
         icon: <FaLocationDot />,
-        text: userGet.location,
+        text: userGet.location.value,
       });
-    if (userGet.dateOfBirth?.isPublic)
+    if (userGet.dateOfBirth?.isPublic && userGet.dateOfBirth.value)
       aboutData.push({
         id: 1,
         icon: <FaRegCalendar />,
-        text: moment(userGet.dateOfBirth).format("Do MMM y"),
+        text: moment(userGet.dateOfBirth.value).format("Do MMM y"),
       });
 
     if (userGet.desc)
@@ -127,11 +125,6 @@ const UserDetails = () => {
             <div className="content">
               <div className="prof-about">
                 <h3>About me</h3>
-                {userGet.bio && (
-                  <>
-                    <p className="weak">"{userGet.bio}"</p>
-                  </>
-                )}
                 {aboutData.map((item) => (
                   <span key={item.id}>
                     {item.icon}&emsp;{item.text}

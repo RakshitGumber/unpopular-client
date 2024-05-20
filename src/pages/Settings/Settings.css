@@ -40,7 +40,7 @@
   gap: 0.5rem;
 }
 
-.setting-conatiner .profile-settings div {
+.setting-conatiner .profile-settings .option {
   display: flex;
   justify-content: space-between;
 }
@@ -49,14 +49,13 @@
   padding-bottom: 0.5rem;
 }
 
-.setting-conatiner .profile-settings div > input {
+.setting-conatiner .profile-settings .option > input {
   height: 1.2rem;
   width: 1.2rem;
   accent-color: var(--primary);
 }
 
-.setting-conatiner .profile-settings .btn {
-  width: 50%;
+.setting-conatiner .btn {
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -64,11 +63,24 @@
   height: 2.5rem;
 }
 
-.setting-conatiner .profile-settings > .row {
+.setting-conatiner .btn:hover {
+  background-color: var(--primary);
+}
+
+.setting-conatiner .btn.red {
+  background-color: var(--accent);
+}
+
+.setting-conatiner .row {
   margin: 1rem 0 0 0;
   display: flex;
   gap: 1rem;
   width: 400px;
+  justify-content: flex-start;
+}
+
+.setting-conatiner .selected {
+  background-color: var(--primary);
 }
 
 .setting-conatiner .theme-settings select {
@@ -91,14 +103,23 @@
   position: relative;
 }
 
-.setting-conatiner .theme-settings::after {
-  content: "";
-  width: 2rem;
-  height: 3rem;
-  display: block;
-  background-color: var(--background);
-  position: absolute;
-  top: 3rem;
-  left: 10rem;
-  border-radius: 0 1rem 1rem 0;
+@media only screen and (max-width: 480.9px) {
+  .setting-conatiner {
+    width: calc(100% - 2rem);
+  }
+
+  .setting-conatiner .row {
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .setting-conatiner .btn {
+    width: 80%;
+    transition: all 300ms ease-in;
+  }
+
+  .setting-conatiner .selected {
+    width: 90%;
+  }
 }

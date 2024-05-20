@@ -11,7 +11,7 @@
 }
 
 .hero {
-  height: calc(100vh);
+  height: 100svh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -306,4 +306,83 @@
   grid-row-gap: 0px;
   gap: 1rem;
   padding: 1rem 0 0 0;
+}
+
+@media only screen and (max-width: 1024.9px) {
+  .what-is-sec {
+    position: relative;
+    padding: 0;
+  }
+  .what-is-sec .what-is-right {
+    position: absolute;
+    width: 100%;
+    opacity: 0.4;
+  }
+
+  .what-is-sec::after {
+    position: absolute;
+    z-index: 1;
+    content: "";
+    background-color: var(--primary);
+    width: 100%;
+    display: block;
+    height: 450px;
+    opacity: 0.1;
+    animation: opacityGlow 5s ease-in-out infinite forwards;
+  }
+
+  @keyframes opacityGlow {
+    0%,
+    100% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 0.2;
+    }
+  }
+
+  .what-is-sec .what-is-right .box {
+    border-radius: 0;
+  }
+
+  .what-is-sec .what-is-left {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    padding: 3rem;
+    /* background-color: var(--primary); */
+  }
+
+  .what-is-sec .what-is-left .desc-text {
+    color: var(--text);
+  }
+
+  .what-is-sec .what-is-left .heading-text::after {
+    content: none;
+  }
+
+  .about-sec {
+    padding: 50px;
+  }
+}
+
+@media only screen and (max-width: 767.9px) {
+  .what-is-sec {
+    height: 120svh;
+  }
+
+  .what-is-sec .what-is-right,
+  .what-is-sec .what-is-right .box,
+  .what-is-sec::after {
+    height: 720px;
+  }
+
+  .about-sec {
+    flex-flow: column nowrap;
+    height: auto;
+  }
+
+  .about-sec .content {
+    width: 100%;
+  }
 }

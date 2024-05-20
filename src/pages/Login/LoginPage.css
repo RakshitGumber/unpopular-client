@@ -5,7 +5,7 @@
   background-color: var(--background);
   padding: 5rem 1rem;
   border-radius: 0.5rem;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .login-wrapper > .login-container {

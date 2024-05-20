@@ -21,8 +21,6 @@
   --secondary-text: #9696bf;
   --text: white;
   --border: #2d2d2d;
-  width: 100%;
-  height: 100%;
 }
 
 .light-theme {
@@ -31,6 +29,11 @@
   --secondary-text: #31313c;
   --text: #16161d;
   --border: #d0d0e0;
+}
+
+canvas {
+  background: var(--background);
+  color: var(--text);
 }
 
 body {

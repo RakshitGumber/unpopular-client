@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
 export const successToast = (msg, options) => {
   return toast.success(msg, {
     theme: options?.theme ?? "dark",

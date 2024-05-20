@@ -17,7 +17,7 @@ const initialState = {
   email: "",
   password: "",
   location: "",
-  bio: "",
+  desc: "",
 };
 
 const EditProfile = ({ setEditing }) => {
@@ -109,7 +109,7 @@ const EditProfile = ({ setEditing }) => {
             type="date"
             name="dateOfBirth"
             onChange={handleChange}
-            placeholder={userInfo.dateOfBirth}
+            placeholder={userInfo.dateOfBirth?.value}
           />
         </div>
         <div>
@@ -118,7 +118,7 @@ const EditProfile = ({ setEditing }) => {
             type="text"
             name="location"
             onChange={handleChange}
-            placeholder={userInfo.location ?? "Your Location"}
+            placeholder={userInfo.location?.value ?? "Your Location"}
           />
         </div>
         <div>

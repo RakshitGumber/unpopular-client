@@ -82,7 +82,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.userInfo = action.payload;
       state.userGet =
-        state.userGet._id === state.userInfo._id
+        state.userGet?._id === state.userInfo._id
           ? action.payload
           : state.userGet;
       state.success = true;

@@ -9,7 +9,9 @@ import { UserActionsControlContext } from "..";
 const Navbar = (props) => {
   const token = useSelector((state) => state.user.userToken);
   const user = useSelector((state) => state.user.userInfo);
-  const action = useContext(UserActionsControlContext);
+  const { navbarIconRef, setShowUserActions } = useContext(
+    UserActionsControlContext
+  );
 
   return (
     <>
@@ -35,7 +37,8 @@ const Navbar = (props) => {
               firstname={user.firstName}
               lastname={user.lastName}
               image={user.profilepic}
-              onClick={() => action?.setShowUserActions((prev) => !prev)}
+              onClick={() => setShowUserActions((prev) => !prev && !prev)}
+              ref={navbarIconRef}
             />
           )}
         </div>

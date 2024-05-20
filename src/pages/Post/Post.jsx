@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Sidebar, Loader, Navbar } from "../../components";
+import { Sidebar, Loader, Navbar, RightPanel } from "../../components";
 import "./Post.css";
 import { FeedCard } from "../../components";
 import { getPosts, commentPost } from "../../toolkit/actions/postActions";
@@ -115,7 +115,7 @@ function Post() {
           </>
         )}
       </div>
-      {/* <RightPanel /> */}
+      <RightPanel />
     </div>
   );
 }

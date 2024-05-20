@@ -57,6 +57,24 @@
   border: 5px solid var(--secondary-background);
 }
 
+.prof-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prof-header::before {
+  content: "Feature Coming Soon";
+  width: 60%;
+  text-align: center;
+  position: absolute;
+  z-index: 10;
+  font-family: "Montserrat";
+  font-size: 40px;
+  font-weight: 700;
+  top: 5rem;
+}
+
 .prof-header > .pic > .status {
   width: 1.2rem;
   height: 1.2rem;
@@ -183,6 +201,12 @@
     bottom: 1rem;
     border: 1px solid var(--secondary-background);
   }
+
+  .prof-header::before {
+    font-size: 40px;
+    font-weight: 500;
+    top: 2.5rem;
+  }
 }
 
 @media only screen and (max-width: 480.9px) {
@@ -221,5 +245,13 @@
   .user-details-wrapper .content .prof-about {
     width: 100%;
     max-width: none;
+  }
+}
+
+@media only screen and (max-width: 520.9px) {
+  .prof-header::before {
+    font-size: 20px;
+    font-weight: 500;
+    top: 2.5rem;
   }
 }

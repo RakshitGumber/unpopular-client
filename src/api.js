@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://unpopular-server-d3eb5c5b11fc.herokuapp.com/",
+  // baseURL: "https://unpopular-server-d3eb5c5b11fc.herokuapp.com/",
+  baseURL: "http://localhost:8080",
 });
 
 API.interceptors.request.use((req) => {

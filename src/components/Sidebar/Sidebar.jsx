@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
+import React, { useRef, useContext } from "react";
 import "./Sidebar.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -7,6 +7,7 @@ import {
   IoCompassOutline,
   IoAddSharp,
   IoSettingsSharp,
+  IoExit,
 } from "react-icons/io5";
 import CreateFeed from "../Feed/CreateFeed";
 import { useOutsideClick, ShowImage } from "../../util";
@@ -16,8 +17,13 @@ import { FeedControlContext, UserActionsControlContext } from "..";
 
 function Sidebar() {
   const iconSize = useRef(32);
-  const actions = useContext(UserActionsControlContext);
-  const userRef = useRef(null);
+  const {
+    setShowUserActions,
+    sidebarRef,
+    showUserActions,
+    sidebarIconRef,
+    navbarIconRef,
+  } = useContext(UserActionsControlContext);
 
   const { showCreate, setShowCreate } = useContext(FeedControlContext);
   const actionsRef = useRef(null);
@@ -25,15 +31,10 @@ function Sidebar() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
-  const [localUserRef, setLocalUserRef] = useState();
-
-  useEffect(() => {
-    setLocalUserRef(userRef);
-  }, [userRef]);
 
   // Custome hook to detect if the person clicked outside
-  useOutsideClick(actionsRef, () => actions?.setShowUserActions(false), {
-    notOnRef: localUserRef,
+  useOutsideClick(actionsRef, () => setShowUserActions(!showUserActions), {
+    notOnRefs: [sidebarRef, sidebarIconRef, navbarIconRef],
   });
 
   const data = [
@@ -72,20 +73,17 @@ function Sidebar() {
       <div className="sidebar-wrapper">
         <h1>U</h1>
         <div className="user-wrapper">
-          <div ref={userRef} className="user">
+          <div ref={sidebarRef} className="user">
             <ShowImage
               image={user?.profilepic}
               firstname={user?.firstName}
               lastname={user?.lastName}
-              onClick={() =>
-                actions?.setShowUserActions(!actions.showUserActions)
-              }
+              onClick={() => setShowUserActions(!showUserActions)}
+              ref={sidebarIconRef}
             />
             <div
               className="user-info"
-              onClick={() =>
-                actions?.setShowUserActions(!actions.showUserActions)
-              }
+              onClick={() => setShowUserActions(!showUserActions)}
             >
               <p className="strong">
                 {user?.firstName} {user?.lastName}
@@ -124,16 +122,16 @@ function Sidebar() {
         </div>
       </div>
       {showCreate && <CreateFeed setShowCreate={setShowCreate} />}
-      {actions?.showUserActions && (
+      {showUserActions && (
         <div ref={actionsRef} className="user-actions">
           <button
             className="action"
             onClick={() => {
-              localStorage.removeItem("token");
               dispatch(logout());
               navigate("/", { replace: true });
             }}
           >
+            <IoExit />
             Log Out
           </button>
           <button
