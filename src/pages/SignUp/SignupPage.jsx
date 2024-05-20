@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
 import { Navbar } from "../../components";
 import "./SignupPage.css";
-import { ShowImage } from "../../util";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { ReactComponent as WelcomeSVG } from "../../assets/welcome.svg";
 
 const initialState = {
   firstName: "",
@@ -61,7 +61,7 @@ const SignupPage = () => {
           <div className="signup-left">
             <h2>Sign up for your account</h2>
             <p>Fill out the form below to create your personalized account.</p>
-            <ShowImage image="" firstname="PreviewImage"></ShowImage>
+            <WelcomeSVG className="svg" />
           </div>
           <div className="signup-right">
             <div className="form-headers">

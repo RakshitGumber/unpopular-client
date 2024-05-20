@@ -40,12 +40,11 @@
   color: var(--secondary-text);
 }
 
-.signup-wrapper .signup-left > img {
+.signup-wrapper .signup-left .svg {
   max-width: 80%;
   aspect-ratio: 1/1;
   height: 100%;
   align-self: center;
-  display: none;
 }
 
 .signup-wrapper .signup-right {

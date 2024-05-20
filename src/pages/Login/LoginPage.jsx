@@ -4,8 +4,9 @@ import { login } from "../../toolkit/actions/userActions";
 import { resetUser } from "../../toolkit/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Navbar } from "../../components";
-import { errorToast, ShowImage } from "../../util";
+import { errorToast } from "../../util";
 import "./LoginPage.css";
+import { ReactComponent as LoginSVG } from "../../assets/welcome-back.svg";
 
 const initialState = {
   email: "",
@@ -51,7 +52,7 @@ const LoginPage = () => {
               Sign in to your account to access your personalized dashboard and
               tools.
             </p>
-            <ShowImage image="" firstname="PreviewImage"></ShowImage>
+            <LoginSVG className="svg" />
           </div>
           <div className="login-right">
             <div className="form-headers">

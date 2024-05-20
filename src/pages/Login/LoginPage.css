@@ -39,12 +39,11 @@
   color: var(--secondary-text);
 }
 
-.login-wrapper .login-left > img {
+.login-wrapper .login-left .svg {
   max-width: 80%;
   aspect-ratio: 1/1;
-  height: 100%;
+  height: 60%;
   align-self: center;
-  display: none;
 }
 
 .login-wrapper .login-right {
