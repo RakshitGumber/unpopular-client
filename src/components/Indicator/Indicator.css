@@ -1,0 +1,31 @@
+#indicator {
+  width: 5rem;
+  height: 5rem;
+  background-color: var(--secondary-background);
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#indicator > svg {
+  width: 80%;
+  height: 80%;
+}
+
+.indicator {
+  position: absolute;
+  right: 1rem;
+  z-index: 1000;
+  bottom: 1rem;
+}
+
+@media only screen and (max-width: 768.9px) {
+  .indicator {
+    bottom: auto;
+    right: auto;
+    top: 3.5rem;
+    left: 1rem;
+  }
+}
