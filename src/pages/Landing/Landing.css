@@ -377,9 +377,11 @@
   }
 
   .what-is-sec .what-is-right,
-  .what-is-sec .what-is-right .box,
   .what-is-sec::after {
-    height: 720px;
+    height: 80%;
+  }
+  .what-is-sec .what-is-right .box {
+    height: 100%;
   }
   .what-is-sec .what-is-left {
     padding: 1rem;
