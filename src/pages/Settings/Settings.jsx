@@ -13,9 +13,11 @@ const Settings = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
 
-  const [showLocation, setShowLocation] = useState(userInfo.location.isPublic);
+  const [showLocation, setShowLocation] = useState(
+    userInfo?.location?.isPublic ?? true
+  );
   const [showDateOfBirth, setShowDateOFBirth] = useState(
-    userInfo.dateOfBirth.isPublic
+    userInfo?.dateOfBirth?.isPublic ?? true
   );
   const { theme } = useSelector((state) => state.settings);
 
