@@ -35,7 +35,7 @@ function RightPanel() {
       dispatch(getPosts());
     };
 
-    if (pathname !== "/home") {
+    if (pathname !== "/home" && !pathname.includes("/user")) {
       fetchPosts();
     }
   }, [dispatch, pathname]);

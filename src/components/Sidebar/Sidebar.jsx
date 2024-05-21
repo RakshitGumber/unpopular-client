@@ -129,6 +129,7 @@ function Sidebar() {
             onClick={() => {
               dispatch(logout());
               navigate("/", { replace: true });
+              setShowUserActions(false);
             }}
           >
             <IoExit />
@@ -137,7 +138,8 @@ function Sidebar() {
           <button
             className="action"
             onClick={() => {
-              navigate(`../user/${user?._id}/settings`);
+              navigate(`/user/${user?._id}/settings`, { replace: true });
+              setShowUserActions(false);
             }}
           >
             <IoSettingsSharp />

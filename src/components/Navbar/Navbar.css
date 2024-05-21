@@ -53,3 +53,8 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+
+.hidden-overflow {
+  overflow: hidden;
+  width: 100%;
+}

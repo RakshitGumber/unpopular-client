@@ -1,8 +1,9 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useEffect, useMemo, useState } from "react";
 import {
   Feed,
   Followers,
   Following,
+  LoadingContext,
   Pending,
   UserActionsControlContext,
 } from "./components";
@@ -26,13 +27,14 @@ const App = () => {
   const { userToken } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.settings);
 
+  const [loading, setLoading] = useState(false);
+
   function changeFavicon(text, theme) {
     const canvas = document.createElement("canvas");
     canvas.height = 64;
     canvas.width = 64;
-    canvas.classList.add("dark-theme");
     const ctx = canvas.getContext("2d");
-    ctx.font = "64px Montserrat";
+    ctx.font = "bold 64px Montserrat";
     ctx.fillStyle = theme === "dark-theme" ? "#16161d" : "white";
     ctx.rect(0, 0, 64, 64);
     ctx.fill();
@@ -42,10 +44,10 @@ const App = () => {
     ctx.fillText(text, 32, 54);
 
     const link = document.createElement("link");
-    const oldLinks = document.querySelectorAll('link[rel="shortcut icon"]');
+    const oldLinks = document.querySelectorAll('link[rel="icon"]');
     oldLinks.forEach((e) => e.parentNode.removeChild(e));
     link.id = "dynamic-favicon";
-    link.rel = "shortcut icon";
+    link.rel = "icon";
     link.href = canvas.toDataURL();
     document.head.appendChild(link);
   }
@@ -139,18 +141,37 @@ const App = () => {
   const sidebarIconRef = createRef();
   const navbarIconRef = createRef();
 
+  const postLoading = useSelector((state) => state.post.loading);
+  const userLoading = useSelector((state) => state.user.loading);
+  const peopleLoading = useSelector((state) => state.people.loading);
+
+  const Loadings = useMemo(
+    () => [postLoading, userLoading, peopleLoading],
+    [postLoading, userLoading, peopleLoading]
+  );
+
+  useEffect(() => {
+    if (Loadings.some((loading) => loading)) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [Loadings, setLoading]);
+
   return (
-    <UserActionsControlContext.Provider
-      value={{
-        showUserActions,
-        setShowUserActions,
-        sidebarRef,
-        sidebarIconRef,
-        navbarIconRef,
-      }}
-    >
-      <RouterProvider router={router} />
-    </UserActionsControlContext.Provider>
+    <LoadingContext.Provider value={loading}>
+      <UserActionsControlContext.Provider
+        value={{
+          showUserActions,
+          setShowUserActions,
+          sidebarRef,
+          sidebarIconRef,
+          navbarIconRef,
+        }}
+      >
+        <RouterProvider router={router} />
+      </UserActionsControlContext.Provider>
+    </LoadingContext.Provider>
   );
 };
 

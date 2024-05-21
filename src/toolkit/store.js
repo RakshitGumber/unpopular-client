@@ -5,7 +5,6 @@ import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import postsReducer from "./slices/postSlice";
 import followerReducer from "./slices/followerSlice";
-import messageReducer from "./slices/messageSlice";
 import settingsReducer from "./slices/settingsSlice";
 
 const peoplePersistConfig = {
@@ -30,7 +29,6 @@ const reducers = combineReducers({
   post: postsReducer,
   settings: persistReducer(settingsPersistConfig, settingsReducer),
   people: persistReducer(peoplePersistConfig, followerReducer),
-  message: messageReducer,
 });
 
 export const store = configureStore({

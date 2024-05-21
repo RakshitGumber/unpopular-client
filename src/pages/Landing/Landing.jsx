@@ -208,7 +208,7 @@ const Landing = () => {
             />
           </div>
           <div className="content">
-            <p className="un-text strong-text">Full Stack Web Developer</p>
+            <p className="strong-text un-text">Full Stack Web Developer</p>
             <p className="strong-text">Rakshit Gumber</p>
             <p className="desc-text p-left-0">
               I am Rakshit Gumber, a full stack web developer, and I created

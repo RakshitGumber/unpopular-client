@@ -19,7 +19,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <main className="content">
-        <Navbar hidden showSearch />
+        <Navbar hidden />
         <Sidebar />
         <Feed />
         <RightPanel />

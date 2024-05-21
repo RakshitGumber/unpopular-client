@@ -367,8 +367,13 @@
 }
 
 @media only screen and (max-width: 767.9px) {
+  .hero .hero-head-text {
+    font-size: 32px;
+  }
+
   .what-is-sec {
-    height: 120svh;
+    min-height: 120svh;
+    height: auto;
   }
 
   .what-is-sec .what-is-right,
@@ -376,13 +381,26 @@
   .what-is-sec::after {
     height: 720px;
   }
+  .what-is-sec .what-is-left {
+    padding: 1rem;
+  }
+
+  .what-is-sec .what-is-left p:not(:first-of-type) {
+    display: none;
+  }
 
   .about-sec {
     flex-flow: column nowrap;
     height: auto;
+    padding: 1rem;
   }
 
   .about-sec .content {
     width: 100%;
+  }
+
+  .footer .desc-text {
+    color: white;
+    font-size: 0.6rem;
   }
 }

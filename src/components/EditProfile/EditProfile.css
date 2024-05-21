@@ -36,8 +36,9 @@
 }
 
 .update-form .img-container {
-  width: 10rem;
-  height: 10rem;
+  max-width: 10rem;
+  /* height: 10rem; */
+  aspect-ratio: 1/1;
   position: relative;
   overflow: hidden;
 }
@@ -45,7 +46,7 @@
 .update-form .img-container::before {
   content: "";
   width: 11rem;
-  height: 11rem;
+  aspect-ratio: 1/1;
   display: block;
   z-index: 1;
   background: radial-gradient(
@@ -86,6 +87,7 @@
 
 .update-form-container .update-form .left {
   align-items: center;
+  justify-content: flex-end;
 }
 
 .update-form-container .update-form .right {
@@ -125,4 +127,34 @@
 
 .update-form-container .update-form .btn:first-of-type:hover {
   background-color: var(--primary);
+}
+
+@media only screen and (max-width: 480.9px) {
+  .update-form-container {
+    width: 100vw;
+    height: 100svh;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 0;
+  }
+
+  .update-form {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .update-form .row .img-container {
+    width: 5rem;
+  }
+
+  .update-form .row .img-container::before {
+    width: 5.2rem;
+    top: -0.1rem;
+    left: -0.1rem;
+  }
+
+  .update-form .img-container .icn-btn {
+    width: 2rem;
+    height: 2rem;
+  }
 }

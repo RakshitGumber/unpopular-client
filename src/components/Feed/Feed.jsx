@@ -64,7 +64,7 @@ function Feed({ hideHeading }) {
   if (pageLoading) return <Loader />;
 
   return (
-    <div className="feed-wrapper">
+    <div className={`feed-wrapper ${hideHeading ? "no-padding" : ""}`}>
       {!hideHeading && <h2>Feed</h2>}
       <div className="feeds">
         {!id ? (

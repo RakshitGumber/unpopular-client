@@ -27,6 +27,15 @@ const EditProfile = ({ setEditing }) => {
   const { userInfo, success, error } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.settings);
 
+  useEffect(() => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        profilepic: userInfo.profilepic,
+      };
+    });
+  }, [userInfo]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser({ id, formData }));
@@ -58,14 +67,14 @@ const EditProfile = ({ setEditing }) => {
           <div className="left">
             <div className="img-container">
               <ShowImage
-                image={userInfo.profilepic}
+                image={formData.profilepic}
                 firstname={userInfo.firstName}
                 lastname={userInfo.lastName}
               />
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  setFormData({ ...formData, profilepic: null });
+                  setFormData({ ...formData, profilepic: "" });
                 }}
                 className="icn-btn"
               >

@@ -4,7 +4,8 @@ import "./Navbar.css";
 import { useSelector } from "react-redux";
 import { ShowImage } from "../../util";
 import { ToastContainer } from "react-toastify";
-import { UserActionsControlContext } from "..";
+import { Indicator, LoadingContext, UserActionsControlContext } from "..";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Navbar = (props) => {
   const token = useSelector((state) => state.user.userToken);
@@ -12,6 +13,7 @@ const Navbar = (props) => {
   const { navbarIconRef, setShowUserActions } = useContext(
     UserActionsControlContext
   );
+  const loading = useContext(LoadingContext);
 
   return (
     <>
@@ -44,6 +46,18 @@ const Navbar = (props) => {
         </div>
       </nav>
       <ToastContainer />
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            className="indicator"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+          >
+            <Indicator />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
