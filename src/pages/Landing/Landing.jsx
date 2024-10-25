@@ -175,7 +175,7 @@ const Landing = () => {
         <motion.div className="sticky-nav-bg" style={{ opacity: navOpacity }} />
         <section className="what-is-sec">
           <div className="what-is-left">
-            <h2 className="heading-text">What is Unpopular?</h2>
+            <h2 className="heading-text">What is Unpopular2</h2>
             <p className="desc-text">
               Unpopular is a platform made for everyone because we believe your
               unpopular opinion matters. Our mission is to provide a safe and
