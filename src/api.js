@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const API_ENDPOINT = process.env.REACT_APP_API_URL;
+console.log(API_ENDPOINT);
+
 const API = axios.create({
-  baseURL: "https://unpopular-server-d3eb5c5b11fc.herokuapp.com/",
-  // baseURL: "http://localhost:8080",
+  baseURL: API_ENDPOINT,
 });
 
 API.interceptors.request.use((req) => {
