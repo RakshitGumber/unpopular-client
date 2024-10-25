@@ -1,10 +1,7 @@
 import axios from "axios";
 
-const API_ENDPOINT = process.env.REACT_APP_API_URL;
-console.log(API_ENDPOINT);
-
 const API = axios.create({
-  baseURL: API_ENDPOINT,
+  baseURL: "https://unpopular-server.vercel.app",
 });
 
 API.interceptors.request.use((req) => {
